@@ -51,15 +51,15 @@ class SkiResortController extends Controller
         $request->validate([
             'name' => 'required|max:256',
             'town' => 'required|max:256',
-            'country' => 'required|integer',
+            'country' => 'required|max:256',
             'lifts' => 'required|numeric|between:1,999',
-            'slopeKms' => 'required|numeric|between:1,99999',
-            'isOpen' => 'required|boolean'
+            'slopeKms' => 'required|numeric|between:0,99999',
+            'isOpen' => 'boolean'
         ]);
         
         $skiResort = SkiResort::create($request->all());
         
-        return redirect()->route('skiResorts.show',$skiResort->id)
+        return redirect()->route('skiResort.show',$skiResort->id)
         ->with('success',"Estación de esquí $skiResort->name añadida correctamente");
         
     }
@@ -144,7 +144,7 @@ class SkiResortController extends Controller
         
         $skiResort->delete();
         
-        return redirect('skiResorts')->with('success',"Estación de esquí $skiResort->name eliminada");
+        return redirect('skiResort')->with('success',"Estación de esquí $skiResort->name eliminada");
         
     }
 }
