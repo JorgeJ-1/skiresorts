@@ -18,7 +18,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::resource('sportCars', SkiResortController::class); // Genera las rutas automáticamente
+Route::resource('skiResort', SkiResortController::class); // Genera las rutas automáticamente
 
-Route::get('sportCars/{sportcar}/delete', [SkiResortController::class, 'delete'] )->name('sportCars.delete'); // Delete genera una sola ruta
+Route::get('skiResort/{skiResort}/delete', [SkiResortController::class, 'delete'] )->name('skiResort.delete'); // Delete genera una sola ruta
     
