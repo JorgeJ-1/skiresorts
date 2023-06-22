@@ -3,7 +3,7 @@
 @section('titulo', 'Borrado de la estación de esquí {{"$skiResort->name"}}')
 
 @section('contenido')
-	<form method="POST" class="my-2 border p-5" action="{{route('skiResorts.destroy', $skiResort->id)}}"> {{ csrf_field() }}
+	<form method="POST" class="my-2 border p-5" action="{{route('skiResort.destroy', $skiResort->id)}}"> {{ csrf_field() }}
 		<input name="_method" type="hidden" value="DELETE">
         <label for="confirmdelete">Confirmar el borrado de {{"$skiResort->name"}}: </label>
         <input type="submit" alt="Borrar" title="Borrar" class="btn btn-danger m-4" value="Borrar" id="confirmdelete">
@@ -12,6 +12,6 @@
 
 @section('enlaces')
 	@parent
-	<a href="{{route('skiResorts.index')}}" class="btn btn-primary m-2">Lista</a>
-	<a href="{{route('skiResorts.show', $skiResort->id)}}" class="btn btn-primary m-2"> Regresar a detalles de la estación de esquí</a>
+	<a href="{{route('skiResort.index')}}" class="btn btn-primary m-2">Lista</a>
+	<a href="{{route('skiResort.show', $skiResort->id)}}" class="btn btn-primary m-2"> Regresar a detalles de la estación de esquí</a>
 @endsection
