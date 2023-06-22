@@ -1,6 +1,6 @@
 @extends('layouts.master')
 
-@section('titulo', "Detalles de la estación de esquí {{'$skiResort->name'}}")
+@section('titulo', "Detalles de la estación de esquí $skiResort->name")
 
 @section('contenido')
             <table class="table table-striped table-bordered ">

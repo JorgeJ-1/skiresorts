@@ -14,6 +14,7 @@
         <link rel="stylesheet" type="text/css" href="{{asset('css/bootstrap.min.css')}}"> 
     </head>
     <body class="container p-3">
+    	<h1 class="page-header">Estaciones de esquí del mundo</h1>
     	@section('navegacion') 
     	<nav> 
             <ul class="nav nav-pills my-3">

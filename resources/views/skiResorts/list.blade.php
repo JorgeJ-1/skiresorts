@@ -39,5 +39,4 @@
 @section('enlaces')
 	@parent
 	<a href="{{route('skiResort.index')}}" class="btn btn-primary m-2">Lista</a>
-	<a href="{{route('skiResort.show', $skiResort->id)}}" class="btn btn-primary m-2"> Regresar a detalles de la estación de esquí</a>
 @endsection
