@@ -69,10 +69,10 @@ class SkiResortController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(SkiResort $skiResort)
     {
-        //
-        $skiResort = SkiResort::findOrFail($id);
+        // Inyecta el objeto. Le llega el id y realiza el findOrFail automáticamente 
+        //$skiResort = SkiResort::findOrFail($id);
         
         return view('skiResorts.show',['skiResort'=>$skiResort]);
     }
@@ -83,10 +83,10 @@ class SkiResortController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(SkiResort $skiResort)
     {
         //
-        $skiResort = SkiResort::findOrFail($id);
+        //$skiResort = SkiResort::findOrFail($id);
         
         return view('skiResorts.update',['skiResort'=>$skiResort]);
     }
@@ -124,10 +124,10 @@ class SkiResortController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function delete($id)
+    public function delete(SkiResort $skiResort)
     {
         //
-        $skiResort=SkiResort::findOrFail($id);
+        //$skiResort=SkiResort::findOrFail($id);
         return view('skiResorts.delete',['skiResort'=>$skiResort]);
     }
     
@@ -137,10 +137,10 @@ class SkiResortController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(SkiResort $skiResort)
     {
         //
-        $skiResort=SkiResort::findOrFail($id);
+        //$skiResort=SkiResort::findOrFail($id);
         
         $skiResort->delete();
         

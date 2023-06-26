@@ -18,6 +18,7 @@
             			<td>{{$skiResort->town}}</td>
             			<td>{{$skiResort->country}}</td>
             			<td class="text-center">
+            				<!--  route() es la función helper a la que le pasamos el nombre de la ruta -->
             				<a href="{{route('skiResort.show', $skiResort->id)}}"> 
             					<img height="20" width="20" src="{{asset('images/buttons/details.png')}}" alt="Ver detalles" title="Ver detalles">
             				</a>

@@ -33,10 +33,23 @@
 		<main>
 			<h2>@yield('titulo')</h2>
 			
-			@includeWhen(Session::has('success'),'layouts.success')
-			@includeWhen($errors->any(),'layouts.error')
+			@if(Session::has('success'))
+			<x-Alert type="success" message="{{Session::get('success')}}"/>	
+			@endif
+			
+			@if($errors->any())
+			<x-Alert type="danger" message="Se han producido errores">
+				<ul>
+					@foreach($errors->all() as $error)
+						<li>{{$error}}</li>
+					@endforeach
+				</ul>
+			</x-Alert>
+			@endif
 			
 			@yield('contenido')
+			
+			
 			
 			<div class="btn-group" role="group" aria-label="links">
 				@section('enlaces')
