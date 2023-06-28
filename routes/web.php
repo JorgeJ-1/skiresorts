@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\WelcomeController;
 use App\Http\Controllers\SkiResortController;
 
 /*
@@ -14,11 +15,30 @@ use App\Http\Controllers\SkiResortController;
 |
 */
 
-Route::get('/', function () {
+/*
+ * 
+ Route::get('/', function () {
     return view('welcome');
 });
+*/
 
-Route::resource('skiResort', SkiResortController::class); // Genera las rutas automáticamente
+Route::get('/', [WelcomeController::class, 'index'])->name('portada');
 
-Route::get('skiResort/{skiResort}/delete', [SkiResortController::class, 'delete'] )->name('skiResort.delete'); // Delete genera una sola ruta
-    
+//Route::get('skiResort/search', [SkiResortController::class, 'search'] )->name('skiResort.search');
+
+//Route::resource('skiResort', SkiResortController::class); // Genera las rutas automáticamente
+
+
+Route::get('skiResort', [SkiResortController::class, 'index'] )->name('skiResort.index');
+Route::post('skiResort', [SkiResortController::class, 'store'] )->name('skiResort.store');
+Route::get('skiResort/create', [SkiResortController::class, 'create'] )->name('skiResort.create');
+Route::get('skiResort/search', [SkiResortController::class, 'search'] )->name('skiResort.search');
+Route::get('skiResort/{skiResort}', [SkiResortController::class, 'show'] )->name('skiResort.show');
+Route::put('skiResort/{skiResort}', [SkiResortController::class, 'update'] )->name('skiResort.update');
+Route::delete('skiResort/{skiResort}', [SkiResortController::class, 'destroy'] )->name('skiResort.destroy');
+Route::get('skiResort/{skiResort}/delete', [SkiResortController::class, 'delete'] )->name('skiResort.delete');
+Route::get('skiResort/{skiResort}/edit', [SkiResortController::class, 'edit'] )->name('skiResort.edit');
+
+//Route::get('skiResort/{skiResort}/delete', [SkiResortController::class, 'delete'] )->name('skiResort.delete'); // Delete genera una sola ruta
+
+Route::fallback([WelcomeController::class, 'index']);

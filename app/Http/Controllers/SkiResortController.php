@@ -27,6 +27,35 @@ class SkiResortController extends Controller
     }
     
     /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function search(Request $request)
+    {
+        //
+        $request->validate([
+            'name' => 'max:256',
+            'town' => 'max:256',
+            'country' => 'max:256',
+        ]);
+        
+        $name=$request->input('name','');
+        $town=$request->input('town','');
+        $country=$request->input('country','');
+        
+        $skiResorts=SkiResort::where('name','like',"%$name%")
+                             ->where('town','like',"%$town%")
+                             ->where('country','like',"%$country%")
+                             ->orderby('id','desc')  
+                             ->paginate(config('paginator.skiresort'))
+                             ->appends(['name'=>$name,'town'=>$town,'country'=>$country]);
+        //
+        return view('skiResorts.list',['skiResorts'=>$skiResorts, 'name'=>$name,'town'=>$town,'country'=>$country]);
+        
+    }
+    
+    /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
@@ -98,7 +127,7 @@ class SkiResortController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, SkiResort $skiResort)
     {
         //
         $request->validate([
@@ -110,7 +139,7 @@ class SkiResortController extends Controller
         ]);
 
        
-        $skiResort = SkiResort::findOrFail($id);
+        //$skiResort = SkiResort::findOrFail($id);
         
         $skiResort->update($request->all()+['isOpen'=>0]);
 

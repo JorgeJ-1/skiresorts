@@ -15,7 +15,7 @@ class CreateSkiresortsTable extends Migration
     {
         Schema::create('skiresorts', function (Blueprint $table) {
             $table->id();
-            $table->string('name',256);
+            $table->string('name',256)->unique();
             $table->string('town',256);
             $table->string('country',256);
             $table->integer('lifts');

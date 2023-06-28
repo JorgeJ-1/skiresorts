@@ -1,3 +1,4 @@
+@php($pagina=Route::currentRouteName())
 @extends('layouts.master')
 
 @section('titulo', "Borrado de la estación de esquí $skiResort->name")

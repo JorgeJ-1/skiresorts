@@ -1,8 +1,23 @@
+@php($pagina=Route::currentRouteName())
+
 @extends('layouts.master')
 
 @section('titulo', 'Lista de estaciones de esquí del mundo')
 
 @section('contenido')
+	
+			<form method=GET class='col-7 row' action="{{route('skiResort.search')}}">
+    			<input name="name" type='text' class="col form-control mr-2 mb-2" placeholder="Nombre" maxlength="16" 
+    					value="{{$name ?? ''}}">
+    			<input name="town" type='text' class="col form-control mr-2 mb-2" placeholder="Ciudad"  maxlength="16" 
+    					value="{{$town ?? ''}}">
+    			<input name="country" type='text' class="col form-control mr-2 mb-2" placeholder="País"  maxlength="16" 
+    					value="{{$country ?? ''}}">
+    			<button type="submit" class='col btn btn-primary mr-2 mb-2'>Buscar</button>
+    			<a href="{{route('skiResort.index')}}" class='col'>
+    				<button type="button"class='btn btn-primary mb-2'  >Quitar filtro</button>
+    			</a>		
+			</form>
             <table class="table table-striped table-bordered ">
             	<tr>
             		<th>ID</th>
@@ -30,10 +45,12 @@
             				</a>
             			</td>
             		</tr>
+            		@if($loop->last)
+            		<tr>
+            			<td colspan="7">Mostrando {{sizeof($skiResorts)}} de {{count($skiResorts)}}.</td>
+            		</tr> 
+            		@endif
             	@endforeach
-            	<tr>
-            		<td colspan="4">Mostrando {{sizeof($skiResorts)}} de {{$total}}.</td>
-            	</tr> 
             </table>
 @endsection
 

@@ -19,13 +19,14 @@
     	<nav> 
             <ul class="nav nav-pills my-3">
                 <li class="nav-item mr-2">
-                	<a class="nav-link active" href="{{url('/')}}">Inicio</a> 
+                	<a class="nav-link {{$pagina=='portada'? 'active':''}}" href="{{route('portada')}}">Inicio</a> 
                 </li>
                 <li class="nav-item mr-2">
-                	<a class="nav-link" href="{{route('skiResort.index')}}">Lista</a> 
+                	<a class="nav-link {{$pagina=='skiResort.index' || $pagina=='skiresort.search' ? 'active':''}}" 
+                		href="{{route('skiResort.index')}}">Lista</a> 
                 </li>
                 <li class="nav-item">
-                	<a class="nav-link" href="{{route('skiResort.create')}}">Nueva estación de esquí</a>
+                	<a class="nav-link {{$pagina=='skiResort.create'? 'active':''}}" href="{{route('skiResort.create')}}">Nueva estación de esquí</a>
                 </li>
             </ul>
         </nav>    
@@ -53,7 +54,7 @@
 			
 			<div class="btn-group" role="group" aria-label="links">
 				@section('enlaces')
-					<a href="{{url('/')}}" class="btn btn-primary m-2">Inicio</a>
+					<a href="{{route('portada')}}" class="btn btn-primary m-2">Inicio</a>
 				@show
 			</div>
 			@section('pie')
