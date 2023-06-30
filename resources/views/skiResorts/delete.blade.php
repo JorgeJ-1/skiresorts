@@ -4,8 +4,8 @@
 @section('titulo', "Borrado de la estación de esquí $skiResort->name")
 
 @section('contenido')
-	<form method="POST" class="my-2 border p-5" action="{{route('skiResort.destroy', $skiResort->id)}}"> 
-		{{csrf_field()}}
+	<form method="POST" class="my-2 border p-5" action="{{URL::signedroute('skiResort.destroy', $skiResort->id)}}"> 
+		@csrf <!-- {{csrf_field()}} -->
 		<input name="_method" type="hidden" value="DELETE">
         <label for="confirmdelete">Confirmar el borrado de {{"$skiResort->name"}}: </label>
         <input type="submit" alt="Borrar" title="Borrar" class="btn btn-danger m-4" value="Borrar" id="confirmdelete">

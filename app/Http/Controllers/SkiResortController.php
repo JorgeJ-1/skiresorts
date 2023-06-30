@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\SkiResort;
+use Facade\FlareClient\View;
 
 class SkiResortController extends Controller
 {
@@ -15,6 +16,7 @@ class SkiResortController extends Controller
      */
     public function index()
     {
+        
         //
         $skiResorts=SkiResort::orderBy('id','DESC')->paginate(10);
         
@@ -76,17 +78,27 @@ class SkiResortController extends Controller
     public function store(Request $request)
     {
         //validación de los datos de entrada
-        //pendiente sustituir los años por año actual
         $request->validate([
             'name' => 'required|max:256',
             'town' => 'required|max:256',
             'country' => 'required|max:256',
             'lifts' => 'required|numeric|between:1,999',
-            'slopeKms' => 'required|numeric|between:0,99999'
+            'slopeKms' => 'required|numeric|between:0,99999',
+            'isOpen'=> 'sometimes|boolean'
         ]);
-        
+
+        // Añade los checkbox que el caso de no estar informados no llegan en la response (fusión arrays)
         $skiResort = SkiResort::create($request->all()+['isOpen'=>0]);
         
+        // Método alternativo, antes del create informar en la request los campos que faltan
+        //$request->request->add(['isOpen'=> $request->post('isOpen',false)]);
+        
+        // Segundo método alternativo para cargar los checkbox sin seleccionar
+        //$skiResort = new SkiResort($request->except(['isOpen']));
+        //$skiResort->isOpen = $request->post('isOpen', false);
+        //$skiResort->save();
+
+
         return redirect()->route('skiResort.show',$skiResort->id)
         ->with('success',"Estación de esquí $skiResort->name añadida correctamente");
         
@@ -166,9 +178,14 @@ class SkiResortController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(SkiResort $skiResort)
+    public function destroy(Request $request, SkiResort $skiResort)
     {
-        //
+        
+        if (!$request->hasValidSignature()) {
+            abort('401','La firma no se pudo validar');
+        }
+        
+        // Implicit bilding
         //$skiResort=SkiResort::findOrFail($id);
         
         $skiResort->delete();

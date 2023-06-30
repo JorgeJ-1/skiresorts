@@ -6,7 +6,7 @@
 
 @section('contenido')
 	<form class="my-2 border p-5" method="POST" action="{{route('skiResort.store')}}"> 
-		{{csrf_field()}}
+		@csrf <!-- {{csrf_field()}} -->
 		<div class="form-group row">
 			<label for="inputName" class="col-sm-2 col-form-Brand">Nombre</label> 
 			<input name="name" type="text" class="up form-control col-sm-10" id="inputName" 

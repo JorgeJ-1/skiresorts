@@ -45,12 +45,13 @@
             				</a>
             			</td>
             		</tr>
-            		@if($loop->last)
-            		<tr>
-            			<td colspan="7">Mostrando {{sizeof($skiResorts)}} de {{count($skiResorts)}}.</td>
-            		</tr> 
-            		@endif
+            		<!--  @if($loop->last)
+            		ejemplo de objeto $loop
+            		@endif-->
             	@endforeach
+           		<tr>
+            		<td colspan="7">Mostrando {{sizeof($skiResorts)}} de {{count($skiResorts)}}.</td>
+            	</tr> 
             </table>
 @endsection
 
