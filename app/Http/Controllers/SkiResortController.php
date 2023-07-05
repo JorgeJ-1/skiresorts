@@ -77,6 +77,7 @@ class SkiResortController extends Controller
      */
     public function store(Request $request)
     {
+        
         //validación de los datos de entrada
         $request->validate([
             'name' => 'required|max:256',
@@ -84,11 +85,13 @@ class SkiResortController extends Controller
             'country' => 'required|max:256',
             'lifts' => 'required|numeric|between:1,999',
             'slopeKms' => 'required|numeric|between:0,99999',
-            'isOpen'=> 'sometimes|boolean'
+            'isOpen'=> 'sometimes|boolean',
+            'image'=> 'sometimes|file|image|mimes:jpg,png,gif,webp|max:2048'
         ]);
 
         // Añade los checkbox que el caso de no estar informados no llegan en la response (fusión arrays)
-        $skiResort = SkiResort::create($request->all()+['isOpen'=>0]);
+        //$skiResort = SkiResort::create($request->all()+['isOpen'=>0]);
+        
         
         // Método alternativo, antes del create informar en la request los campos que faltan
         //$request->request->add(['isOpen'=> $request->post('isOpen',false)]);
@@ -98,9 +101,22 @@ class SkiResortController extends Controller
         //$skiResort->isOpen = $request->post('isOpen', false);
         //$skiResort->save();
 
+        // Recuperar todos los datos excepto la imagen (pone el valor nulo en la imagen)
+        $datos =$request->except(['image'])+['isOpen'=>0]+['image'=>NULL];
+        
+        
+        if ($request->hasFile('image')) {
+            $ruta= $request->file('image')->store(config('filesystems.skiresortImageDir'));
+            // pendiente añadir gestión de errores
+            $datos['image']=pathinfo($ruta, PATHINFO_BASENAME);
+        }
+        
+        $skiResort=SkiResort::create($datos);
+        
 
         return redirect()->route('skiResort.show',$skiResort->id)
-        ->with('success',"Estación de esquí $skiResort->name añadida correctamente");
+        ->with('success',"Estación de esquí $skiResort->name añadida correctamente")
+        ->cookie('lastInsertedId',$skiResort->id,0);
         
     }
     
@@ -141,6 +157,7 @@ class SkiResortController extends Controller
      */
     public function update(Request $request, SkiResort $skiResort)
     {
+        
         //
         $request->validate([
             'name' => 'required|max:256',

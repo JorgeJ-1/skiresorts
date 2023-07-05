@@ -13,7 +13,13 @@ return [
     |
     */
 
-    'default' => env('FILESYSTEM_DRIVER', 'local'),
+    'default' => env('FILESYSTEM_DRIVER', 'public'),
+    
+    // Ruta por defecto para las imagenes
+    'skiresortImageDir'=>'images/skiresorts/',
+    // Nombre para la imagen por defecto
+    'skiResortDefaultImage'=>'void.jpg',
+    
 
     /*
     |--------------------------------------------------------------------------

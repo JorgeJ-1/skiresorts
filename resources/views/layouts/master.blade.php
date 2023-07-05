@@ -25,8 +25,11 @@
                 	<a class="nav-link {{$pagina=='skiResort.index' || $pagina=='skiresort.search' ? 'active':''}}" 
                 		href="{{route('skiResort.index')}}">Lista</a> 
                 </li>
-                <li class="nav-item">
+                <li class="nav-item mr-r2">
                 	<a class="nav-link {{$pagina=='skiResort.create'? 'active':''}}" href="{{route('skiResort.create')}}">Nueva estación de esquí</a>
+                </li>
+                <li class="nav-item mr-r2">
+                	<a class="nav-link {{$pagina=='contact'? 'active':''}}" href="{{route('contact')}}">Contacto</a>
                 </li>
             </ul>
         </nav>    

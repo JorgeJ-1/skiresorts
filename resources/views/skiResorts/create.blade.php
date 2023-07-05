@@ -5,7 +5,7 @@
 @section('titulo', 'Nueva estación de esquí')
 
 @section('contenido')
-	<form class="my-2 border p-5" method="POST" action="{{route('skiResort.store')}}"> 
+	<form class="my-2 border p-5" method="POST" enctype="multipart/form-data" action="{{route('skiResort.store')}}" > 
 		@csrf <!-- {{csrf_field()}} -->
 		<div class="form-group row">
 			<label for="inputName" class="col-sm-2 col-form-Brand">Nombre</label> 
@@ -31,6 +31,10 @@
  			<label for="inputSlopeKms" class="col-sm-2 col-form-label">Kms</label> 
             <input name="slopeKms" type="number" class="up form-control col-sm-4" id="inputSlopeKms" 
                     		maxlength="11" required="required" min="0" step="0.01" value="{{old('slopeKms')}}">
+		</div>
+		<div class="form-group row">
+ 			<label for="inputImage" class="col-sm-2 col-form-label">Imagen</label> 
+            <input name="image" type="file" class="form-control-file col-sm-10 " id="inputImage">
 		</div>
         <div class="form-group row"> 
         	<div class="form-check">

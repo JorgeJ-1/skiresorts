@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\WelcomeController;
 use App\Http\Controllers\SkiResortController;
+use App\Http\Controllers\contactController;
 
 /*
 |--------------------------------------------------------------------------
@@ -40,5 +41,12 @@ Route::get('skiResort/{skiResort}/delete', [SkiResortController::class, 'delete'
 Route::get('skiResort/{skiResort}/edit', [SkiResortController::class, 'edit'] )->name('skiResort.edit');
 
 //Route::get('skiResort/{skiResort}/delete', [SkiResortController::class, 'delete'] )->name('skiResort.delete'); // Delete genera una sola ruta
+
+ 
+Route::get('/contact', [ContactController::class, 'index']) ->name('contact');
+Route::post('/contact', [ContactController::class, 'send']) ->name('contact.email');
+
+
+
 
 Route::fallback([WelcomeController::class, 'index']);
