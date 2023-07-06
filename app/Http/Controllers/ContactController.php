@@ -15,13 +15,13 @@ class ContactController extends Controller
     
     //
     public function send(Request $request) {
-        $message = new \stdClass();
-        $message->subject = $request->subject;
-        $message->email = $request->email;
-        $message->name = $request->name; 
-        $message->message = $request->message;
+        $messag = new \stdClass();
+        $messag->subject = $request->subject;
+        $messag->email = $request->email;
+        $messag->name = $request->name; 
+        $messag->message = $request->message;
         
-        Mail::to('contact@skiresorts.com')->send(new Contact($message));
+        Mail::to('contact@skiresorts.com')->send(new Contact($messag));
         return redirect()
             ->route('portada')
             ->with('success', 'Mensaje enviado correctamente.');

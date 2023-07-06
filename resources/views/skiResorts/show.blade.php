@@ -4,7 +4,8 @@
 @section('titulo', "Detalles de la estación de esquí $skiResort->name")
 
 @section('contenido')
-            <table class="table table-striped table-bordered ">
+		<div class="row">
+            <table class="col table table-striped table-bordered ">
             	<tr>
             		<td>ID</td>
             		<td>{{$skiResort->id}}</td>
@@ -30,6 +31,12 @@
             		<td>{{$skiResort->isOpen? 'SI': 'NO'}}</td>
             	</tr>
             </table>
+            	
+            <table  class="col">
+            	<td>pruebas de dos tablas   </td>
+            </table>
+		</div>
+            
             <div class="text-end my-3"> 
             	<div class="btn-group mx-2">
             		<a class="mx-2" href="{{route('skiResort.edit', $skiResort->id) }}">

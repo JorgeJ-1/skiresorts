@@ -61,9 +61,10 @@
             		@endif-->
             	@endforeach
            		<tr>
-            		<td colspan="7">Mostrando {{sizeof($skiResorts)}} de {{count($skiResorts)}}.</td>
+            		<td colspan="7">Mostrando {{$skiResorts->count()}} de {{$skiResorts->total()}}.</td>
             	</tr> 
             </table>
+            {{$skiResorts->links()}}
 @endsection
 
 @section('enlaces')

@@ -62,7 +62,7 @@
 			</div>
 			@section('pie')
 			<footer class="page-footer font-small p-4 bg-light">
-				<p>Aplicación creada por J.Gómez como ejemplo de clase. 
+				<p>Aplicación creada por JJ. como ejemplo de clase. 
 				   Desarrollada haciendo uso de <b>Laravel</b> y <b>Bootstrap</b>
 			</footer>
 			@show

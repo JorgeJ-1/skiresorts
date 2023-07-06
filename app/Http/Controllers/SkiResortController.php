@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\SkiResort;
 use Facade\FlareClient\View;
+use Illuminate\Pagination\Paginator;
 
 class SkiResortController extends Controller
 {
@@ -20,11 +21,12 @@ class SkiResortController extends Controller
         //
         $skiResorts=SkiResort::orderBy('id','DESC')->paginate(10);
         
-        //
-        $totalSkiResorts=SkiResort::count();
+        // Con el objetor paginator ya no es necesario pasarle el total
+        //$totalSkiResorts=SkiResort::count();
         
         //
-        return view('skiResorts.list',['skiResorts'=>$skiResorts, 'total'=>$totalSkiResorts]);
+        //return view('skiResorts.list',['skiResorts'=>$skiResorts, 'total'=>$totalSkiResorts]);
+        return view('skiResorts.list',['skiResorts'=>$skiResorts]);
         
     }
     
