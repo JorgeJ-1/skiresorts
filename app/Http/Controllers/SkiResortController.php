@@ -44,6 +44,8 @@ class SkiResortController extends Controller
             'country' => 'max:256',
         ]);
         
+
+        
         $name=$request->input('name','');
         $town=$request->input('town','');
         $country=$request->input('country','');
@@ -80,7 +82,7 @@ class SkiResortController extends Controller
     public function store(Request $request)
     {
         
-        //validación de los datos de entrada
+        //validación de los datos de entrada (devuelve un array asociativo con los campos y valores validados
         $request->validate([
             'name' => 'required|max:256',
             'town' => 'required|max:256',
@@ -92,7 +94,7 @@ class SkiResortController extends Controller
         ]);
 
         // Añade los checkbox que el caso de no estar informados no llegan en la response (fusión arrays)
-        //$skiResort = SkiResort::create($request->all()+['isOpen'=>0]);
+        $skiResort = SkiResort::create($request->all()+['isOpen'=>0]);
         
         
         // Método alternativo, antes del create informar en la request los campos que faltan

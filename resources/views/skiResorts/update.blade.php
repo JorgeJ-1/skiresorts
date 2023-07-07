@@ -4,7 +4,9 @@
 @section('titulo', "Actualización de la estación de esquí $skiResort->name")
 
 @section('contenido')
-            <form class="my-2 border p-5" method="POST" action="{{route('skiResort.update', $skiResort->id)}}"> 
+	<div class='container'>
+		<div class='row'>
+            <form class="col-7 my-2 border p-5" method="POST" action="{{route('skiResort.update', $skiResort->id)}}"> 
             	{{csrf_field()}} 
             	<input name="_method" type="hidden" value="PUT">
                 <div class="form-group row">
@@ -38,6 +40,25 @@
                 	<button type="reset" class="btn btn-secondary m-2">Reestablecer</button>
                 </div>
             </form>
+            <form class='col-3'>
+                <div class="form-group row">
+                	<figure class="text-center" style="max-width: 176px"> 
+                		<img style="max-width: 340%"
+								alt="Imagen de {{$skiResort->name}}" title="Imagen de {{$skiResort->name}}"
+								src="{{
+									$skiResort->image? 
+									asset('storage/'.config('filesystems.skiresortImageDir')).'/'.$skiResort->image: 
+									asset('storage/'.config('filesystems.skiresortImageDir')).'/void.jpg'
+								 }}">
+					</figure>
+					<!--                 
+ 					<label for="inputImage" class="col-sm-2 col-form-label">Imagen</label> 
+            		<input name="image" type="file" class="form-control-file col-sm-10 " id="inputImage">
+            		 -->
+                </div>
+            </form>
+		</div>
+	</div>
 @endsection
 
 @section('enlaces')

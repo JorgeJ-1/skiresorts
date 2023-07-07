@@ -33,7 +33,16 @@
             </table>
             	
             <table  class="col">
-            	<td>pruebas de dos tablas   </td>
+            	<tr>
+					<td class="text-center" style="max-width: 180px"> <img class="rounded" style="max-width: 100%"
+							alt="Imagen de {{$skiResort->name}}" title="Imagen de {{$skiResort->name}}"
+							src="{{
+									$skiResort->image? 
+									asset('storage/'.config('filesystems.skiresortImageDir')).'/'.$skiResort->image: 
+									asset('storage/'.config('filesystems.skiresortImageDir')).'/void.jpg'
+								 }}">
+					</td>
+            	</tr>
             </table>
 		</div>
             

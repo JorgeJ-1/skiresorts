@@ -31,7 +31,7 @@
             	@foreach($skiResorts as $skiResort)
             		<tr>
             			<td>{{$skiResort->id}}</td>
-						<td class="text-center" style="max-width: 80px"> <img class="rounded" style="max-width: 80%"
+						<td class="text-center  .img-thumbnail" style="max-width: 80px"> <img class="rounded" style="max-width: 80%"
 							alt="Imagen de {{$skiResort->name}}" title="Imagen de {{$skiResort->name}}"
 							src="{{
 									$skiResort->image? 
@@ -56,9 +56,6 @@
             				</a>
             			</td>
             		</tr>
-            		<!--  @if($loop->last)
-            		ejemplo de objeto $loop
-            		@endif-->
             	@endforeach
            		<tr>
             		<td colspan="7">Mostrando {{$skiResorts->count()}} de {{$skiResorts->total()}}.</td>
