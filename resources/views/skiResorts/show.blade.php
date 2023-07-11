@@ -45,7 +45,7 @@
             	</tr>
             </table>
 		</div>
-            
+            @auth
             <div class="text-end my-3"> 
             	<div class="btn-group mx-2">
             		<a class="mx-2" href="{{route('skiResort.edit', $skiResort->id) }}">
@@ -56,6 +56,7 @@
                     </a> 
             	</div>
             </div>
+            @endauth
 @endsection
 
 @section('enlaces')

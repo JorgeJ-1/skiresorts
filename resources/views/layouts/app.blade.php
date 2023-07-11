@@ -1,25 +1,27 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="description" content="Aplicación de gestión de estaciones de esquí - skiresorts">
-        <meta name="author" content="J.Gómez">
-		<title>{{config('app.name')}} - @yield('titulo')</title>                
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <!-- Fonts -->
-        <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+    <!-- CSRF Token -->
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
-        <!-- Carga del CSS de Bootstrap -->
-        <link rel="stylesheet" type="text/css" href="{{asset('css/bootstrap.min.css')}}">
-        
-        <!-- Scripts -->
-    	<script src="{{ asset('js/bootstrap.bundle.js') }}" defer></script> 
-        
-    </head>
-    <body class="container p-3">
-    	@section('navegacion') 
-    	 <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
+    <title>{{ config('app.name', 'Laravel') }}</title>
+
+    <!-- Scripts -->
+    <script src="{{ asset('js/app.js') }}" defer></script>
+
+    <!-- Fonts -->
+    <link rel="dns-prefetch" href="//fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
+
+    <!-- Styles -->
+    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+</head>
+<body>
+    <div id="app">
+        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
                     {{ config('app.name', 'Laravel') }}
@@ -72,58 +74,10 @@
                 </div>
             </div>
         </nav>
-    	<nav> 
-            <ul class="nav nav-pills my-3">
-                <li class="nav-item mr-2">
-                	<a class="nav-link {{$pagina=='portada'? 'active':''}}" href="{{route('portada')}}">Inicio</a> 
-                </li>
-                <li class="nav-item mr-2">
-                	<a class="nav-link {{$pagina=='skiResort.index' || $pagina=='skiresort.search' ? 'active':''}}" 
-                		href="{{route('skiResort.index')}}">Lista</a> 
-                </li>
-                @auth
-                <li class="nav-item mr-r2">
-                	<a class="nav-link {{$pagina=='skiResort.create'? 'active':''}}" href="{{route('skiResort.create')}}">Nueva estación de esquí</a>
-                </li>
-                @endauth
-                <li class="nav-item mr-r2">
-                	<a class="nav-link {{$pagina=='contact'? 'active':''}}" href="{{route('contact')}}">Contacto</a>
-                </li>
-            </ul>
-        </nav>    
-		@show
-		<main>
-			<h2>@yield('titulo')</h2>
-			
-			@if(Session::has('success'))
-			<x-Alert type="success" message="{{Session::get('success')}}"/>	
-			@endif
-			
-			@if($errors->any())
-			<x-Alert type="danger" message="Se han producido errores">
-				<ul>
-					@foreach($errors->all() as $error)
-						<li>{{$error}}</li>
-					@endforeach
-				</ul>
-			</x-Alert>
-			@endif
-			
-			@yield('contenido')
-			
-			
-			
-			<div class="btn-group" role="group" aria-label="links">
-				@section('enlaces')
-					<a href="{{route('portada')}}" class="btn btn-primary m-2">Inicio</a>
-				@show
-			</div>
-			@section('pie')
-			<footer class="page-footer font-small p-4 bg-light">
-				<p>Aplicación creada por JJ. como ejemplo de clase. 
-				   Desarrollada haciendo uso de <b>Laravel</b> y <b>Bootstrap</b>
-			</footer>
-			@show
-		</main>
-	</body>
+
+        <main class="py-4">
+            @yield('content')
+        </main>
+    </div>
+</body>
 </html>

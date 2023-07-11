@@ -2,8 +2,6 @@
 
 @extends('layouts.master')
 
-@section('titulo', 'Estaciones de esquí - portada -')
-
 @section('contenido')
 	<main>
     	<h2>Bienvenido a estaciones de esquí del mundo</h2>
