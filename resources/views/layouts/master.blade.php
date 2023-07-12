@@ -77,6 +77,11 @@
                 <li class="nav-item mr-2">
                 	<a class="nav-link {{$pagina=='portada'? 'active':''}}" href="{{route('portada')}}">Inicio</a> 
                 </li>
+                @auth
+                <li class="nav-item mr-r2">
+                	<a class="nav-link {{$pagina=='home'? 'active':''}}" href="{{route('home')}}">Home</a>
+                </li>
+                @endauth
                 <li class="nav-item mr-2">
                 	<a class="nav-link {{$pagina=='skiResort.index' || $pagina=='skiresort.search' ? 'active':''}}" 
                 		href="{{route('skiResort.index')}}">Lista</a> 
