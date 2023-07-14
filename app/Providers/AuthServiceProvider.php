@@ -26,5 +26,9 @@ class AuthServiceProvider extends ServiceProvider
         $this->registerPolicies();
 
         //
+        Gate::define('skiresortdelete', function($user,$skiResort)
+        {
+            return $user->id == $skiResort->user_id;    
+        });
     }
 }

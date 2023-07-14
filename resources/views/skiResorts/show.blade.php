@@ -27,8 +27,16 @@
             		<td>{{$skiResort->slopeKms}}</td>
             	</tr>
             	<tr>
+            		<td>Pistas Totales</td>
+            		<td>{{$skiResort->runs}}</td>
+            	</tr>
+            	<tr>
             		<td>Abierta</td>
             		<td>{{$skiResort->isOpen? 'SI': 'NO'}}</td>
+            	</tr>
+            	<tr>
+            		<td>Pistas Abiertas</td>
+            		<td>{{$skiResort->openRuns}}</td>
             	</tr>
             </table>
             	

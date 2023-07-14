@@ -26,6 +26,7 @@
             		<th>Nombre</th>
             		<th>Ciudad</th>
             		<th>País</th>
+            		<th>Abierta</th>
             		<th>Operaciones</th>
             	</tr>
             	@foreach($skiResorts as $skiResort)
@@ -43,6 +44,7 @@
             			<td>{{$skiResort->name}}</td> 
             			<td>{{$skiResort->town}}</td>
             			<td>{{$skiResort->country}}</td>
+            			<td>{{$skiResort->isOpen? 'SI': 'NO'}}</td>
             			<td class="text-center">
             				<!--  route() es la función helper a la que le pasamos el nombre de la ruta -->
             				<a href="{{route('skiResort.show', $skiResort->id)}}"> 

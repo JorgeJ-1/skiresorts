@@ -8,6 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class SkiResort extends Model
 {
     use HasFactory;
-    protected $fillable=['name','town','country','lifts','slopeKms','runs','openRuns','isOpen','seasonStart','seasonEnd','image'];
+    protected $fillable=['name','town','country','lifts','slopeKms','runs','openRuns','isOpen','seasonStart','seasonEnd','image','user_id'];
     protected $table='skiresorts';
 }

@@ -5,8 +5,11 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\SkiResort;
+use App\Http\Requests\SkiResortRequest;
 use Facade\FlareClient\View;
 use Illuminate\Pagination\Paginator;
+use Illuminate\Support\Facades\Gate;
+
 
 class SkiResortController extends Controller
 {
@@ -79,10 +82,11 @@ class SkiResortController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(SkiResortRequest $request)
     {
         
         //validación de los datos de entrada (devuelve un array asociativo con los campos y valores validados
+        /*
         $request->validate([
             'name' => 'required|max:256',
             'town' => 'required|max:256',
@@ -92,10 +96,10 @@ class SkiResortController extends Controller
             'isOpen'=> 'sometimes|boolean',
             'image'=> 'sometimes|file|image|mimes:jpg,png,gif,webp|max:2048'
         ]);
+        */
 
         // Añade los checkbox que el caso de no estar informados no llegan en la response (fusión arrays)
-        $skiResort = SkiResort::create($request->all()+['isOpen'=>0]);
-        
+        //$skiResort = SkiResort::create($request->all()+['isOpen'=>0]+['user_id'=>$request->user()->id]);
         
         // Método alternativo, antes del create informar en la request los campos que faltan
         //$request->request->add(['isOpen'=> $request->post('isOpen',false)]);
@@ -107,7 +111,7 @@ class SkiResortController extends Controller
 
         // Recuperar todos los datos excepto la imagen (pone el valor nulo en la imagen)
         $datos =$request->except(['image'])+['isOpen'=>0]+['image'=>NULL];
-        
+        $datos['user_id']=$request->user()->id;
         
         if ($request->hasFile('image')) {
             $ruta= $request->file('image')->store(config('filesystems.skiresortImageDir'));
@@ -116,7 +120,6 @@ class SkiResortController extends Controller
         }
         
         $skiResort=SkiResort::create($datos);
-        
 
         return redirect()->route('skiResort.show',$skiResort->id)
         ->with('success',"Estación de esquí $skiResort->name añadida correctamente")
@@ -162,7 +165,8 @@ class SkiResortController extends Controller
     public function update(Request $request, SkiResort $skiResort)
     {
         
-        //
+        // Se elimina la validación explicita al realizarla la clase FormRequest
+        /*
         $request->validate([
             'name' => 'required|max:256',
             'town' => 'required|max:256',
@@ -170,7 +174,7 @@ class SkiResortController extends Controller
             'lifts' => 'required|numeric|between:1,999',
             'slopeKms' => 'required|numeric|between:1,99999'
         ]);
-
+        */
        
         //$skiResort = SkiResort::findOrFail($id);
         
@@ -190,7 +194,14 @@ class SkiResortController extends Controller
     {
         //
         //$skiResort=SkiResort::findOrFail($id);
-        return view('skiResorts.delete',['skiResort'=>$skiResort]);
+        //
+        // La facade Gates tiene dos métodos estáticos: allows y denies
+        if(Gate::allows('skiresortdelete',$skiResort))
+        {
+            return view('skiResorts.delete',['skiResort'=>$skiResort]);
+        }
+        abort(401,'No eres propietario de la estación de esquí');
+        
     }
     
     /**
@@ -206,7 +217,11 @@ class SkiResortController extends Controller
             abort('401','La firma no se pudo validar');
         }
         
-        // Implicit bilding
+        if(Gate::denies('skiresortdelete',$skiResort))
+        {
+            abort(401,'No eres propietario de la estación de esquí');
+        }
+        // Implicit binding
         //$skiResort=SkiResort::findOrFail($id);
         
         $skiResort->delete();
