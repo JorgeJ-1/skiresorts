@@ -1,0 +1,31 @@
+TINKER
+
+$alo=new Alojamiento();\
+$alo->phone='+34636000111';\
+$alo->name='Hotel Uno';\
+$alo->town='Barcelona';\
+$alo->type=1;\
+$alo->save();
+
+$alo=new Alojamiento();\
+$alo->phone='+34636000222';\
+$alo->name='Hotel Dos';\
+$alo->town='Barcelona';\
+$alo->type=1;\
+$alo->save();
+
+$alo=new Alojamiento();\
+$alo->phone='+34636000333';\
+$alo->name='Hotel Tres';\
+$alo->town='Barcelona';\
+$alo->type=1;\
+$alo->save();
+
+$alo=new Alojamiento();\
+$alo->phone='+34636000444';\
+$alo->name='Hotel 4';\
+$alo->town='Puigcerda';\
+$alo->type=1;\
+$alo->save();
+
+Alojamiento::create(['phone'=>'+34636000555','name'=>'Hotel 5','town'=>'Puigcerda','type'=>1]);
