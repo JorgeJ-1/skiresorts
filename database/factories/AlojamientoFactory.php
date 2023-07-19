@@ -22,9 +22,10 @@ class AlojamientoFactory extends Factory
         
         $phone=$faker->e164PhoneNumber();
         $typeLiteral=$faker->randomElement(['Hotel', 'Hostal', 'Apartamento', 'Casa','Habitación']);
-        $name=' '.$typeLiteral.$faker->name();
+        $name=' '.$typeLiteral.' '.$faker->name();
         $town=$faker->city();
         
+        $type=5;
         switch ($typeLiteral){
             case 'Hotel':
                 $type=1;
@@ -38,7 +39,6 @@ class AlojamientoFactory extends Factory
             case 'Casa':
                 $type=4;
                 break;
-            $type=1;
         }
         
         
@@ -46,8 +46,8 @@ class AlojamientoFactory extends Factory
             //
             'phone'=>$phone,
             'name'=>$name,
-            'town'=>$this->faker->word(),
-            'type'=>'name'
+            'town'=>$town,
+            'type'=>$type,
         ];
     }
 }

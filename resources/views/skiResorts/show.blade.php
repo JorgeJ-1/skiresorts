@@ -4,8 +4,10 @@
 @section('titulo', "Detalles de la estación de esquí $skiResort->name")
 
 @section('contenido')
-		<div class="row">
-            <table class="col table table-striped table-bordered ">
+<div class='container'>
+	<div class="row">
+		<div class="col-8">
+            <table class="table table-striped table-bordered ">
             	<tr>
             		<td>ID</td>
             		<td>{{$skiResort->id}}</td>
@@ -39,8 +41,9 @@
             		<td>{{$skiResort->openRuns}}</td>
             	</tr>
             </table>
-            	
-            <table  class="col">
+        </div>
+        <div class="col-3">
+            <table>
             	<tr>
 					<td class="text-center" style="max-width: 180px"> <img class="rounded" style="max-width: 100%"
 							alt="Imagen de {{$skiResort->name}}" title="Imagen de {{$skiResort->name}}"
@@ -53,18 +56,20 @@
             	</tr>
             </table>
 		</div>
-            @auth
-            <div class="text-end my-3"> 
-            	<div class="btn-group mx-2">
-            		<a class="mx-2" href="{{route('skiResort.edit', $skiResort->id) }}">
-            			<img height="40" width="40" src="{{asset('images/buttons/update.png')}}" alt="Modificar" title="Modificar">
-                    </a>
-                    <a class="mx-2" href="{{route('skiResort.delete', $skiResort->id)}}">
+	</div>
+    @auth
+    <div class="text-end my-3"> 
+      	<div class="btn-group mx-2">
+        	<a class="mx-2" href="{{route('skiResort.edit', $skiResort->id) }}">
+           			<img height="40" width="40" src="{{asset('images/buttons/update.png')}}" alt="Modificar" title="Modificar">
+            </a>
+            <a class="mx-2" href="{{route('skiResort.delete', $skiResort->id)}}">
                     	<img height="40" width="40" src="{{asset('images/buttons/delete.png')}}" alt="Borrar" title="Borrar">
-                    </a> 
-            	</div>
-            </div>
-            @endauth
+            </a> 
+        </div>
+    </div>
+    @endauth
+</div>
 @endsection
 
 @section('enlaces')

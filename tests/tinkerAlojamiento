@@ -29,3 +29,23 @@ $alo->type=1;\
 $alo->save();
 
 Alojamiento::create(['phone'=>'+34636000555','name'=>'Hotel 5','town'=>'Puigcerda','type'=>1]);
+
+$role=new Role();\
+$role->role='administrador';\
+$role->save();\
+$role->role='todopoderoso';\
+$role->save();\
+$role->role='moderador';\
+$role->save();\
+$role->role='supervisor';\
+$role->save();\
+$role->role='usuario';\
+$role->save();\
+$role->role='superusuario';\
+$role->save();
+
+
+DB::table(role_user) insert([
+		['user_id'=1, 'role_id=5],
+		['user_id'=1, 'role_id=5],
+	])

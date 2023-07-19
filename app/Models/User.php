@@ -6,6 +6,7 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Hamcrest\Arrays\IsArray;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
@@ -43,4 +44,20 @@ class User extends Authenticatable implements MustVerifyEmail
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function roles();
+    public function hasRole($roleNames):bool {
+        
+        // Convierte en array si lo que llega es un string
+        if (!is_array($roleNames)) {
+            $roleNames=[$roleNames];
+        };
+        
+        foreach ($this->roles as $role){
+            if (in_array($role->role, $roleNames)) {
+                return true;
+            }
+        }
+        return false;
+    }
 }
