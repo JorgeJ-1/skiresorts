@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Hamcrest\Arrays\IsArray;
+//use App\Models\Role;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
@@ -45,7 +46,12 @@ class User extends Authenticatable implements MustVerifyEmail
         'email_verified_at' => 'datetime',
     ];
 
-    public function roles();
+    //
+    public function roles(){
+        return $this->belongsToMany('Role');
+    }
+    
+    // 
     public function hasRole($roleNames):bool {
         
         // Convierte en array si lo que llega es un string
