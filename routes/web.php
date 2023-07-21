@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\WelcomeController;
 use App\Http\Controllers\SkiResortController;
-use App\Http\Controllers\contactController;
+use App\Http\Controllers\ContactController;
 
 /*
 |--------------------------------------------------------------------------
@@ -47,9 +47,12 @@ Route::get('/contact', [ContactController::class, 'index']) ->name('contact');
 Route::post('/contact', [ContactController::class, 'send']) ->name('contact.email');
 
 
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-
-Route::fallback([WelcomeController::class, 'index']);
+// rutas para el proceso de verificación por e-mail
 Auth::routes(['verify'=>true]);
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::fallback([WelcomeController::class, 'index']);
+
+
+

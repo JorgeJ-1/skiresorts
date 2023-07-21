@@ -14,6 +14,7 @@ class AuthServiceProvider extends ServiceProvider
      */
     protected $policies = [
         // 'App\Models\Model' => 'App\Policies\ModelPolicy',
+        'App\Models\SkiResort' => 'App\Policies\SkiResortPolicy',
     ];
 
     /**
@@ -25,10 +26,12 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        //
+        // Se comenta porque los accesos se controlan usando policies
+        /*
         Gate::define('skiresortdelete', function($user,$skiResort)
         {
             return $user->id == $skiResort->user_id;    
         });
+        */
     }
 }

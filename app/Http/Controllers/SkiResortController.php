@@ -164,6 +164,11 @@ class SkiResortController extends Controller
      */
     public function update(Request $request, SkiResort $skiResort)
     {
+
+        // Autorización mediante policie
+        if ($request->user()->cant('update',$skiResort)) {
+            abort(401,'No eres propietario de la estación de esquí');
+        }
         
         // Se elimina la validación explicita al realizarla la clase FormRequest
         /*
@@ -195,13 +200,21 @@ class SkiResortController extends Controller
         //
         //$skiResort=SkiResort::findOrFail($id);
         //
+        // Se comenta el control por Gates para usar las policies
         // La facade Gates tiene dos métodos estáticos: allows y denies
+        /*
         if(Gate::allows('skiresortdelete',$skiResort))
         {
             return view('skiResorts.delete',['skiResort'=>$skiResort]);
         }
         abort(401,'No eres propietario de la estación de esquí');
+        */
+        // Autorización mediante policie
+        if ($request->user()->cant('delete',$skiResort)) {
+            abort(401,'No eres propietario de la estación de esquí');
+        }
         
+        return view('skiResorts.delete',['skiResort',$skiResort]);
     }
     
     /**
@@ -217,10 +230,17 @@ class SkiResortController extends Controller
             abort('401','La firma no se pudo validar');
         }
         
+        /* Se sustituye la autorización de Gates por Policies
         if(Gate::denies('skiresortdelete',$skiResort))
         {
             abort(401,'No eres propietario de la estación de esquí');
         }
+        */
+        // Autorización mediante policie
+        if ($request->user()->cant('destroy',$skiResort)) {
+            abort(401,'No eres propietario de la estación de esquí');
+        }
+        
         // Implicit binding
         //$skiResort=SkiResort::findOrFail($id);
         

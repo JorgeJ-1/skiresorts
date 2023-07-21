@@ -66,4 +66,14 @@ class User extends Authenticatable implements MustVerifyEmail
         }
         return false;
     }
+
+    //
+    public function skiResorts(){
+        return $this->hasMany('SkiResort');
+    }
+    
+    //
+    public function isOwner(SkiResort $skiResort){
+        return $this->id==$skiResort->user_id;
+    }
 }

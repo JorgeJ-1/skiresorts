@@ -54,6 +54,7 @@ class SkiResortPolicy
     public function update(User $user, SkiResort $skiResort)
     {
         //
+        return $user->id == $skiResort->user_id||$user->name=='%admin%';  
     }
 
     /**
@@ -66,8 +67,22 @@ class SkiResortPolicy
     public function delete(User $user, SkiResort $skiResort)
     {
         //
+        return $user->id == $skiResort->user_id||$user->name=='%admin%';
     }
-
+    
+    /**
+     * Determine whether the user can delete the model.
+     *
+     * @param  \App\Models\User  $user
+     * @param  \App\Models\SkiResort  $skiResort
+     * @return \Illuminate\Auth\Access\Response|bool
+     */
+    public function destroy(User $user, SkiResort $skiResort)
+    {
+        //
+        return $user->id == $skiResort->user_id||$user->name=='%admin%';
+    }
+    
     /**
      * Determine whether the user can restore the model.
      *
