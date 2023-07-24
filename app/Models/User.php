@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Hamcrest\Arrays\IsArray;
+use App\Models\SkiResort;
 //use App\Models\Role;
 
 class User extends Authenticatable implements MustVerifyEmail
@@ -69,7 +70,7 @@ class User extends Authenticatable implements MustVerifyEmail
 
     //
     public function skiResorts(){
-        return $this->hasMany('SkiResort');
+        return $this->hasMany(SkiResort::class);
     }
     
     //

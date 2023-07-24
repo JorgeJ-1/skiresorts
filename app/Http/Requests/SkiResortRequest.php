@@ -32,7 +32,7 @@ class SkiResortRequest extends FormRequest
             'lifts' => 'required|numeric|between:1,999',
             'slopeKms' => 'required|numeric|between:1,99999',
             'runs' => 'required|numeric|between:1,99999',
-            'isOpen'=> 'required_with:openRuns|numeric|between:0,1',
+            'isOpen'=> 'numeric|between:0,1',
             'openRuns' => 'required_if:isOpen,1|numeric|between:0,99999',
             //'seasonStart' => 'required_if:isOpen',
             //'seasonEnd' => 'required_if:isOpen',

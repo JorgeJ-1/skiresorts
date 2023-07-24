@@ -4,11 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\User;
 use App\Models\SkiResort;
 use App\Http\Requests\SkiResortRequest;
 use Facade\FlareClient\View;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Gate;
+use App\Events\FirstSkiResortCreated;
 
 
 class SkiResortController extends Controller
@@ -121,6 +123,12 @@ class SkiResortController extends Controller
         
         $skiResort=SkiResort::create($datos);
 
+                
+        // Mensaje de felicitación después de crear la primera moto
+        if($request->user()->skiResorts->count()==1){
+            FirstSkiResortCreated::dispatch($skiResort, $request->user());
+        }
+        
         return redirect()->route('skiResort.show',$skiResort->id)
         ->with('success',"Estación de esquí $skiResort->name añadida correctamente")
         ->cookie('lastInsertedId',$skiResort->id,0);
@@ -195,7 +203,7 @@ class SkiResortController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function delete(SkiResort $skiResort)
+    public function delete(Request $request, SkiResort $skiResort)
     {
         //
         //$skiResort=SkiResort::findOrFail($id);
@@ -210,10 +218,10 @@ class SkiResortController extends Controller
         abort(401,'No eres propietario de la estación de esquí');
         */
         // Autorización mediante policie
-        if ($request->user()->cant('delete',$skiResort)) {
+        if ($request->user()->cannot('delete',$skiResort)) {
             abort(401,'No eres propietario de la estación de esquí');
         }
-        
+
         return view('skiResorts.delete',['skiResort',$skiResort]);
     }
     
@@ -237,7 +245,7 @@ class SkiResortController extends Controller
         }
         */
         // Autorización mediante policie
-        if ($request->user()->cant('destroy',$skiResort)) {
+        if ($request->user()->cannot('destroy',$skiResort)) {
             abort(401,'No eres propietario de la estación de esquí');
         }
         
