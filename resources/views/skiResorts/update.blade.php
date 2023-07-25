@@ -40,8 +40,9 @@
                 	<button type="reset" class="btn btn-secondary m-2">Reestablecer</button>
                 </div>
             </form>
-            <form class='col-3'>
+            <form class="col-3 my-5" method="POST" action="{{route('skiResort.update', $skiResort->id)}}">
                 <div class="form-group row">
+          
                 	<figure class="text-center" style="max-width: 176px"> 
                 		<img style="max-width: 340%"
 								alt="Imagen de {{$skiResort->name}}" title="Imagen de {{$skiResort->name}}"

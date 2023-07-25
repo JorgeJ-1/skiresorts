@@ -222,7 +222,7 @@ class SkiResortController extends Controller
             abort(401,'No eres propietario de la estación de esquí');
         }
 
-        return view('skiResorts.delete',['skiResort',$skiResort]);
+        return view('skiResorts.delete',['skiResort'=>$skiResort]);
     }
     
     /**
