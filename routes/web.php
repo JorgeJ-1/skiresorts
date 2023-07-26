@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\WelcomeController;
 use App\Http\Controllers\SkiResortController;
 use App\Http\Controllers\ContactController;
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -51,6 +53,29 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 // rutas para el proceso de verificación por e-mail
 Auth::routes(['verify'=>true]);
+
+
+// grupo de rutas para el administrador, llevarán el prefijo 'admin' 
+Route::prefix('admin')->middleware('auth', 'is_admin')->group (function () 
+{  
+    // usuario
+    Route::get('usuario/{user}/detalles', [AdminController::class, 'userShow']) ->name('admin.user.show');
+    Route::get('usuarios', [AdminController::class, 'userList'])->name('admin.users');
+    Route::get('usuario/buscar', [AdminController::class, 'userSearch'])->name('admin.users.search');
+    
+    // añadir un rol 
+    Route::post('role', [AdminController::class, 'setRole']) ->name('admin.user.setRole');
+    // quitar un rol
+    Route::delete('role', [AdminController::class, 'removeRole'])->name('admin.user.removeRole');
+    
+    // usuarios bloqueados
+    Route::get('/bloqueado', [UserController::class, 'blocked']) ->name('user.blocked');
+    
+    
+    // ver las motos eliminadas (/admin/deletedskiResorts)
+    Route::get('deletedskiResorts', [AdminController::class, 'deletedBikes'])->name('admin.deleted.skiResorts');
+});
+
 
 Route::fallback([WelcomeController::class, 'index']);
 

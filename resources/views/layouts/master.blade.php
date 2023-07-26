@@ -91,6 +91,17 @@
                 	<a class="nav-link {{$pagina=='skiResort.create'? 'active':''}}" href="{{route('skiResort.create')}}">Nueva estación de esquí</a>
                 </li>
                 @endauth
+                    @if (Auth: :user ()->has Role('administrador'))
+    				<li class="nav-item mr-2">
+    					<a class="nav-link {{$pagina== 'admin.deleted.bikes'? 'active':''}}" 
+    						href="{{route('admin.deleted.bikes')}}">Motos borradas</a>
+                    </li>
+                    <li class="nav-item mr-2">
+                    	<a class="nav-link {{ $pagina=='admin.users' || $pagina=='admin.users.search' ? 'active' : ''}}"
+                    		href="{{route('admin.users')}}">Gestión de usuarios</a>
+                    </li>
+                    @endif
+                @endauth
                 <li class="nav-item mr-r2">
                 	<a class="nav-link {{$pagina=='contact'? 'active':''}}" href="{{route('contact')}}">Contacto</a>
                 </li>
