@@ -1,6 +1,10 @@
 <?php
-namespace App\Http\Middleware; use Closure;
+
+namespace App\Http\Middleware; 
+
+use Closure;
 use Illuminate\Http\Request;
+
 class IsAdmin{
     // Handle an incoming request.
     public function handle (Request $request, Closure $next){

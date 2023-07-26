@@ -82,24 +82,23 @@
                 	<a class="nav-link {{$pagina=='home'? 'active':''}}" href="{{route('home')}}">Home</a>
                 </li>
                 @endauth
-                <li class="nav-item mr-2">
-                	<a class="nav-link {{$pagina=='skiResort.index' || $pagina=='skiresort.search' ? 'active':''}}" 
-                		href="{{route('skiResort.index')}}">Lista</a> 
-                </li>
-                @auth
-                <li class="nav-item mr-r2">
-                	<a class="nav-link {{$pagina=='skiResort.create'? 'active':''}}" href="{{route('skiResort.create')}}">Nueva estación de esquí</a>
-                </li>
-                @endauth
-                    @if (Auth: :user ()->has Role('administrador'))
-    				<li class="nav-item mr-2">
-    					<a class="nav-link {{$pagina== 'admin.deleted.bikes'? 'active':''}}" 
-    						href="{{route('admin.deleted.bikes')}}">Motos borradas</a>
-                    </li>
                     <li class="nav-item mr-2">
-                    	<a class="nav-link {{ $pagina=='admin.users' || $pagina=='admin.users.search' ? 'active' : ''}}"
-                    		href="{{route('admin.users')}}">Gestión de usuarios</a>
+                    	<a class="nav-link {{$pagina=='skiResort.index' || $pagina=='skiresort.search' ? 'active':''}}" 
+                    		href="{{route('skiResort.index')}}">Lista</a> 
                     </li>
+                @auth
+                    <li class="nav-item mr-r2">
+                    	<a class="nav-link {{$pagina=='skiResort.create'? 'active':''}}" href="{{route('skiResort.create')}}">Nueva estación de esquí</a>
+                    </li>
+                    @if (Auth::user()->hasRole('administrador'))
+        				<li class="nav-item mr-2">
+        					<a class="nav-link {{$pagina== 'admin.deleted.skiResorts'? 'active':''}}" 
+        						href="{{route('admin.deleted.skiResorts')}}">Estaciones de esquí borradas</a>
+                        </li>
+                        <li class="nav-item mr-2">
+                        	<a class="nav-link {{ $pagina=='admin.users' || $pagina=='admin.users.search' ? 'active' : ''}}"
+                        		href="{{route('admin.users')}}">Gestión de usuarios</a>
+                        </li>
                     @endif
                 @endauth
                 <li class="nav-item mr-r2">

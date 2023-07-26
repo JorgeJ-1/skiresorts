@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\Models\User;
+//use App\Models\User;
+use App\Models\Role;
 //use App\Models\SkiResort;
 
 
@@ -27,7 +28,6 @@ class HomeController extends Controller
      */
     public function index()
     {
-
         $user = Auth::user();
         
         $mySkiResorts=$user->skiResorts()->get();

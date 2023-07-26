@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\WelcomeController;
 use App\Http\Controllers\SkiResortController;
@@ -69,11 +70,11 @@ Route::prefix('admin')->middleware('auth', 'is_admin')->group (function ()
     Route::delete('role', [AdminController::class, 'removeRole'])->name('admin.user.removeRole');
     
     // usuarios bloqueados
-    Route::get('/bloqueado', [UserController::class, 'blocked']) ->name('user.blocked');
+    Route::get('/bloqueado', [UserController::class, 'blocked'])->name('user.blocked');
     
     
-    // ver las motos eliminadas (/admin/deletedskiResorts)
-    Route::get('deletedskiResorts', [AdminController::class, 'deletedBikes'])->name('admin.deleted.skiResorts');
+    // ver las estaciones de esquí eliminadas (/admin/deletedskiResorts)
+    Route::get('deletedskiResorts', [AdminController::class, 'deletedSkiResorts'])->name('admin.deleted.skiResorts');
 });
 
 

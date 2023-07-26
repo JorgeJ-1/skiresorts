@@ -9,7 +9,8 @@
     <div class="row justify-content-center">
         <div class="col-md-14">
             <div class="card">
-                <div class="card-header">{{ __('Home') }}</div>
+                <div class="card-header">{{ __('Home') }}
+                </div>
                 	<table class="table table-striped table-bordered ">
                     	<tr>
                     		<td>Nombre</td>
@@ -71,12 +72,8 @@
                 				@endauth
                 			</td>
                 		</tr>
-                	@endforeach
-           
-                </table>
-
-
-                
+                		@endforeach
+                	</table>
             </div>
         </div>
     </div>
