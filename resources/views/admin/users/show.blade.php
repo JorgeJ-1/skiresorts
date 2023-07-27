@@ -1,3 +1,4 @@
+@php($pagina=Route::currentRouteName())
 @extends ('layouts.master') 
 @section('titulo', "Detalles del usuario $user->name") 
 @section('contenido')

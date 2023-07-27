@@ -92,7 +92,7 @@
                     </li>
                     @if (Auth::user()->hasRole('administrador'))
         				<li class="nav-item mr-2">
-        					<a class="nav-link {{$pagina== 'admin.deleted.skiResorts'? 'active':''}}" 
+        					<a class="nav-link {{$pagina=='admin.deleted.skiResorts'? 'active':''}}" 
         						href="{{route('admin.deleted.skiResorts')}}">Estaciones de esquí borradas</a>
                         </li>
                         <li class="nav-item mr-2">

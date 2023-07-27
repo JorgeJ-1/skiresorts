@@ -226,12 +226,12 @@ class SkiResortController extends Controller
     }
     
     /**
-     * Remove the specified resource from storage.
+     * Restaura una estación de esquií borrada.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Request $request, SkiResort $skiResort)
+    public function restore(Request $request, SkiResort $skiResort)
     {
         
         if (!$request->hasValidSignature()) {
@@ -245,6 +245,44 @@ class SkiResortController extends Controller
         }
         */
         // Autorización mediante policie
+        if ($request->user()->cannot('restore',$skiResort)) {
+            abort(401,'No eres propietario de la estación de esquí');
+        }
+        
+        // Implicit binding
+        //$skiResort=SkiResort::findOrFail($id);
+        
+        $skiResort->restore();
+        
+        //return redirect('skiResort')->with('success',"Estación de esquí $skiResort->name eliminada");
+        //return redirect()
+        //    ->route('skiResort.index')
+        //    ->with('success',"Estación de esquí $skiResort->name eliminada");
+        return back()
+            ->with('success',"Estación de esquí $skiResort->name ha sido restaurada");
+        
+    }
+
+    /**
+    * Remove the specified resource from storage.
+    *
+    * @param  int  $id
+    * @return \Illuminate\Http\Response
+    */
+    public function destroy(Request $request, SkiResort $skiResort)
+    {
+        
+        if (!$request->hasValidSignature()) {
+            abort('401','La firma no se pudo validar');
+        }
+        
+        /* Se sustituye la autorización de Gates por Policies
+         if(Gate::denies('skiresortdelete',$skiResort))
+         {
+         abort(401,'No eres propietario de la estación de esquí');
+         }
+         */
+        // Autorización mediante policie
         if ($request->user()->cannot('destroy',$skiResort)) {
             abort(401,'No eres propietario de la estación de esquí');
         }
@@ -254,7 +292,11 @@ class SkiResortController extends Controller
         
         $skiResort->delete();
         
-        return redirect('skiResort')->with('success',"Estación de esquí $skiResort->name eliminada");
+        //return redirect('skiResort')->with('success',"Estación de esquí $skiResort->name eliminada");
+        return redirect()
+        ->route('skiResort.index')
+        ->with('success',"Estación de esquí $skiResort->name eliminada");
         
     }
+    
 }

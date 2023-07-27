@@ -49,7 +49,7 @@ class User extends Authenticatable implements MustVerifyEmail
 
     //
     public function roles(){
-        return $this->belongsToMany('Role');
+        return $this->belongsToMany(Role::class);
     }
     
     // 
@@ -68,6 +68,16 @@ class User extends Authenticatable implements MustVerifyEmail
         return false;
     }
 
+    //
+    public function remainingRoles() {
+        
+        // Recupera los roles que no tiene el usuario 
+        $actualRoles=$this->roles;
+        $allRoles=Role::all();
+
+        return $allRoles->diff($actualRoles);
+    }
+    
     //
     public function skiResorts(){
         return $this->hasMany(SkiResort::class);

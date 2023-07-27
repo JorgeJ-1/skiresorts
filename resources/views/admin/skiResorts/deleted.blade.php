@@ -1,3 +1,4 @@
+@php($pagina=Route::currentRouteName())
 @extends ('layouts.master') 
 @section('contenido')
     <div class="container">
@@ -6,10 +7,11 @@
     	<table class="table table-striped table-bordered ">
             <tr>
                 <th>ID</th>
-                <th>Imagen</th> <th>Marca</th>
-                <th>Modelo</th>
-                <th>Matrícula</th>
-                <th>Usuario</th>
+                <th>Imagen</th> 
+                <th>Nombre</th>
+                <th>Ciudad</th>
+                <th>País</th>
+                <th>Abierta</th>
                 <th></th>
                 <th></th>
             </tr>
@@ -17,20 +19,28 @@
             <tr>
                 <td><b>#{{$skiResort->id}}</b></td>
                 <td class="text-center" style="max-width: 80px"> <img class="rounded" style="max-width: 80%"
-                	alt="Imagen de {{$skiResort->marca}} {{$skiResort->modelo}}" 
-                	title="Imagen de {{$skiResort->marca}} {{$skiResort->modelo}}" 
-                	src="{{$skiResort->imagen ? asset('storage/'.config('filesystems.skiResorts ImageDir')).'/'.$skiResort->imagen:
-                			asset('storage/'.config('filesystems.skiResortsImageDir')).'/default.jpg'}}">
+                	alt="Imagen de {{$skiResort->name}}" 
+                	title="Imagen de {{$skiResort->name}}" 
+                	src="{{
+							$skiResort->image? 
+								asset('storage/'.config('filesystems.skiresortImageDir')).'/'.$skiResort->image: 
+								asset('storage/'.config('filesystems.skiresortImageDir')).'/void.jpg'
+						}}">
                 </td>
-                <td>{{$skiResort->marca}}</td>
-                <td>{{$skiResort->modelo}}</td>
-                <td>{{$skiResort->matricula}}</td>
+ 
+            	<td>{{$skiResort->name}}</td> 
+            	<td>{{$skiResort->town}}</td>
+            	<td>{{$skiResort->country}}</td>
+            	<td>{{$skiResort->isOpen? 'SI': 'NO'}}</td>>
+                
                 <td>{{$skiResort->user ? $skiResort->user->name: 'Desconocido'}}</td>
+                
                 <td class="text-center"> 
                 	<a href="{{route('skiResorts.restore', $skiResort->id)}}"> 
                 		<button class="btn btn-success">Restaurar</button> 
                 	</a>
                 </td>
+                
                 <td class="text-center">
                 	<a onclick='
                 	   if(confirm("¿Estás seguro?"))

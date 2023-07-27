@@ -39,9 +39,11 @@ Route::get('skiResort/create', [SkiResortController::class, 'create'] )->name('s
 Route::get('skiResort/search', [SkiResortController::class, 'search'] )->name('skiResort.search');
 Route::get('skiResort/{skiResort}', [SkiResortController::class, 'show'] )->name('skiResort.show');
 Route::put('skiResort/{skiResort}', [SkiResortController::class, 'update'] )->name('skiResort.update')->middleware('auth');
+Route::delete('skiResort/purge', [SkiResortController::class, 'purge'] )->name('skiResort.purge')->middleware('auth');
 Route::delete('skiResort/{skiResort}', [SkiResortController::class, 'destroy'] )->name('skiResort.destroy')->middleware('auth');
 Route::get('skiResort/{skiResort}/delete', [SkiResortController::class, 'delete'] )->name('skiResort.delete')->middleware('auth');
 Route::get('skiResort/{skiResort}/edit', [SkiResortController::class, 'edit'] )->name('skiResort.edit')->middleware('auth');
+Route::get('skiResort/{skiResort}/restore', [SkiResortController::class, 'restore'] )->name('skiResort.restore')->middleware('auth');
 
 //Route::get('skiResort/{skiResort}/delete', [SkiResortController::class, 'delete'] )->name('skiResort.delete'); // Delete genera una sola ruta
 

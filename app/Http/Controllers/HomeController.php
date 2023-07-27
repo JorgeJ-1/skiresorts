@@ -31,7 +31,10 @@ class HomeController extends Controller
         $user = Auth::user();
         
         $mySkiResorts=$user->skiResorts()->get();
+        
+        $myDeletedSkiResorts=$user->skiResorts()->onlyTrashed()->get();
   
-        return view('home',['user'=>$user, 'skiResorts'=>$mySkiResorts]);
+        return view('home',['user'=>$user, 'skiResorts'=>$mySkiResorts, 'deletedSkiResorts'=>$myDeletedSkiResorts]);
     }
+
 }

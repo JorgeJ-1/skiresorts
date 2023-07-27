@@ -1,3 +1,4 @@
+@php($pagina=Route::currentRouteName())
 @extends ('layouts.master') 
 @section('titulo', 'Lista de usuarios') 
 @section('contenido') 
@@ -38,7 +39,7 @@
     				 @endforeach 
     			</td>
     			<td class="text-center">
-    				<a href="{{route('admin.user. show', $u->id)}}"> 
+    				<a href="{{route('admin.user.show', $u->id)}}"> 
     					<img height="20" width="20" src="{{asset('images/buttons/show.png')}}" alt="Ver detalles" title="Ver detalles">
     				</a>
     			</td>
