@@ -3,7 +3,6 @@
 @extends('layouts.master')
 
 
-
 @section('contenido')
 <div class="container">
     <div class="row justify-content-center">
@@ -88,20 +87,20 @@
                     		@foreach($deletedSkiResorts as $deletedSkiResort)
                         		<tr>
             						<td class="text-center  .img-thumbnail" style="max-width: 80px"> <img class="rounded" style="max-width: 80%"
-            							alt="Imagen de {{$skiResort->name}}" title="Imagen de {{$skiResort->name}}"
+            							alt="Imagen de {{$deletedSkiResort->name}}" title="Imagen de {{$deletedSkiResort->name}}"
             							src="{{
-            									$skiResort->image? 
-            									asset('storage/'.config('filesystems.skiresortImageDir')).'/'.$skiResort->image: 
+            									$deletedSkiResort->image? 
+            									asset('storage/'.config('filesystems.skiresortImageDir')).'/'.$deletedSkiResort->image: 
             									asset('storage/'.config('filesystems.skiresortImageDir')).'/void.jpg'
             								 }}">
             						</td>
                         			 
-                        			<td>{{$skiResort->name}}</td> 
-                        			<td>{{$skiResort->town}}</td>
-                        			<td>{{$skiResort->country}}</td>
-                        			<td>{{$skiResort->isOpen? 'SI': 'NO'}}</td>
+                        			<td>{{$deletedSkiResort->name}}</td> 
+                        			<td>{{$deletedSkiResort->town}}</td>
+                        			<td>{{$deletedSkiResort->country}}</td>
+                        			<td>{{$deletedSkiResort->isOpen? 'SI': 'NO'}}</td>
                         			<td class="text-center">
-                        				<a href="{{route('skiResort.restore', $skiResort->id)}}"> 
+                        				<a href="{{route('skiResort.restore', $deletedSkiResort->id)}}"> 
                         					<button class="btn btn-success">Restaurar</button>
                         				</a>
                         			</td>
@@ -110,11 +109,10 @@
                         								this.nextElementSibling.submit();'>
                         				    <button class="btn btn-danger">Eliminar</button>
                         				</a>
-                        				<form method="POST" action="{{route(skiresort.purge, $skiResort->id}}">
+                        				<form method="POST" action="{{route('skiResort.purge')}}">
                         					@csrf
                         					<input name="_method" type="hidden" value="DELETE">
-                        					<input name="skiResort_id" type="hidden" value="{{$skiResort->id}}">
-                        					<input type="submit" alt="Borrar" title="Eliminar" class="btn btn-danger" value="Eliminar">
+                        					<input name="deletedSkiResort_id" type="hidden" value="{{$deletedSkiResort->id}}">
                         				</form>
                         			</td>
                         		</tr>

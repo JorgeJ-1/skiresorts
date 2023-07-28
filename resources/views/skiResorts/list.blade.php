@@ -50,14 +50,16 @@
             				<a href="{{route('skiResort.show', $skiResort->id)}}"> 
             					<img height="20" width="20" src="{{asset('images/buttons/details.png')}}" alt="Ver detalles" title="Ver detalles">
             				</a>
-            				@auth
-            				<a href="{{route('skiResort.edit', $skiResort->id)}}"> 
-            					<img height="20" width="20" src="{{asset('images/buttons/update.png')}}" alt="Modificar" title="Modificar">
-            				</a>
-            				<a href="{{route('skiResort.delete', $skiResort->id)}}">
-            					<img height="20" width="20" src="{{asset('images/buttons/delete.png')}}" alt="Borrar" title="Borrar">
-            				</a>
-            				@endauth
+            				@can('update',$skiResort))
+                    				<a href="{{route('skiResort.edit', $skiResort->id)}}"> 
+                    					<img height="20" width="20" src="{{asset('images/buttons/update.png')}}" alt="Modificar" title="Modificar">
+                    				</a>
+                			@endcan
+                			@can('delete',$skiResort))
+                    				<a href="{{route('skiResort.delete', $skiResort->id)}}">
+                    					<img height="20" width="20" src="{{asset('images/buttons/delete.png')}}" alt="Borrar" title="Borrar">
+                    				</a>
+            				@endcan
             			</td>
             		</tr>
             	@endforeach

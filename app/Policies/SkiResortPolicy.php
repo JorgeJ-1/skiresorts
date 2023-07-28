@@ -93,6 +93,8 @@ class SkiResortPolicy
     public function restore(User $user, SkiResort $skiResort)
     {
         //
+        return $user->id == $skiResort->user_id||$user->hasRole(['administrador','todopoderoso']);
+        
     }
 
     /**
@@ -105,5 +107,6 @@ class SkiResortPolicy
     public function forceDelete(User $user, SkiResort $skiResort)
     {
         //
+        
     }
 }

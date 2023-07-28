@@ -193,7 +193,16 @@ class SkiResortController extends Controller
         */
        
         //$skiResort = SkiResort::findOrFail($id);
+                
+        if ($request->hasFile('image')) {
+            $ruta= $request->file('image')->store(config('filesystems.skiresortImageDir'));
+            /**
+             * pendiente añadir gestión de errores
+             */
+            $skiResort->image=pathinfo($ruta, PATHINFO_BASENAME);
+        }
         
+       
         $skiResort->update($request->all()+['isOpen'=>0]);
 
         return back()->with('success',"Estación de esquí  $skiResort->name actualizada");
@@ -273,23 +282,12 @@ class SkiResortController extends Controller
     public function restore(Request $request, int $id)
     {
         
-        if (!$request->hasValidSignature()) {
-            abort('401','La firma no se pudo validar');
-        }
-        
-        /* Se sustituye la autorización de Gates por Policies
-         if(Gate::denies('skiresortdelete',$skiResort))
-         {
-         abort(401,'No eres propietario de la estación de esquí');
-         }
-         */
-        
         // Implicit binding no se puede usar porque la moto está borrada
-        $skiResort=SkiResort::withoutTrashed()->findOrFail($id);
+        $skiResort=SkiResort::withTrashed()->findOrFail($id);
 
         // Autorización mediante policie
         if ($request->user()->cannot('restore',$skiResort)) {
-            abort(401,'No eres propietario de la estación de esquí');
+            abort(401,'No estás autorizado para realizar esta operación');
         }
         
         $skiResort->restore();
@@ -299,41 +297,35 @@ class SkiResortController extends Controller
         //    ->route('skiResort.index')
         //    ->with('success',"Estación de esquí $skiResort->name eliminada");
         return back()
-        ->with('success',"Estación de esquí $skiResort->name ha sido restaurada");
+            ->with('success',"Estación de esquí $skiResort->name ha sido restaurada");
         
     }
     
     /**
-     * Restaura una estación de esquí borrada.
+     * Purga una estación de esquí borrada.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function purge(Request $request)
     {
-        
-        if (!$request->hasValidSignature()) {
-            abort('401','La firma no se pudo validar');
-        }
-        
-        // Implicit binding no se puede usar porque la moto está borrada
-        $skiResort=SkiResort::withoutTrashed()->findOrFail($id);
-        
-        if ($skiResort->image) {
-            Storage::delete(config('filesystems.skiresortImageDir').'/'.$skiResort->image);
-            /**
-             * Pendiente añadir el control de errores
-             */
-        }
+
+            // Implicit binding no se puede usar porque la moto está borrada
+        $skiResort=SkiResort::withTrashed()->findOrFail($request->input('deletedSkiResort_id'));
         
         // Autorización mediante policie
         if ($request->user()->cannot('restore',$skiResort)) {
             abort(401,'No eres propietario de la estación de esquí');
         }
         
-       
-        $skiResort->purge();
+        if ($skiResort->forceDelete() && $skiResort->image) {
+            Storage::delete(config('filesystems.skiresortImageDir').'/'.$skiResort->image);
+            /**
+             * Pendiente añadir el control de errores
+             */
+        }
         
+               
         //return redirect('skiResort')->with('success',"Estación de esquí $skiResort->name eliminada");
         //return redirect()
         //    ->route('skiResort.index')
@@ -346,14 +338,13 @@ class SkiResortController extends Controller
     //
     public function deleteImage(Request $request, SkiResort $skiResort){
         
-        if (!$request->hasValidSignature()) {
-            abort('401','La firma no se pudo validar');
-        }
-        
+        /**
+         * Autorización mediante policie de deleteImage pendiente 
+         */
         // Autorización mediante policie
-        if ($request->user()->cannot('restore',$skiResort)) {
-            abort(401,'No eres propietario de la estación de esquí');
-        }
+        //if ($request->user()->cannot('restore',$skiResort)) {
+        //    abort(401,'No eres propietario de la estación de esquí');
+        //}
         
         if ($skiResort->image) {
             Storage::delete(config('filesystems.skiresortImageDir').'/'.$skiResort->image);

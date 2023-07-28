@@ -33,7 +33,7 @@ class HomeController extends Controller
         $mySkiResorts=$user->skiResorts()->get();
         
         $myDeletedSkiResorts=$user->skiResorts()->onlyTrashed()->get();
-  
+
         return view('home',['user'=>$user, 'skiResorts'=>$mySkiResorts, 'deletedSkiResorts'=>$myDeletedSkiResorts]);
     }
 

@@ -45,6 +45,7 @@
                 </div>
             </form>
             <form class="col-3 my-5" method="POST" action="{{route('skiResort.deleteImage', $skiResort->id)}}">
+                @csrf
                 <div class="form-group row">
           
                 	<figure class="text-center" style="max-width: 176px"> 

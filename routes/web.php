@@ -41,7 +41,7 @@ Route::get('skiResort/{skiResort}', [SkiResortController::class, 'show'] )->name
 Route::put('skiResort/{skiResort}', [SkiResortController::class, 'update'] )->name('skiResort.update')->middleware('auth');
 Route::delete('skiResort/{skiResort}', [SkiResortController::class, 'destroy'] )->name('skiResort.destroy')->middleware('auth');
 Route::get('skiResort/{skiResort}/delete', [SkiResortController::class, 'delete'] )->name('skiResort.delete')->middleware('auth');
-Route::put('skiResort/{skiResort}/deleteImage', [SkiResortController::class, 'deleteImage'] )->name('skiResort.deleteImage')->middleware('auth');
+Route::post('skiResort/{skiResort}/deleteImage', [SkiResortController::class, 'deleteImage'] )->name('skiResort.deleteImage')->middleware('auth');
 Route::get('skiResort/{skiResort}/edit', [SkiResortController::class, 'edit'] )->name('skiResort.edit')->middleware('auth');
 Route::get('skiResort/{skiResort}/restore', [SkiResortController::class, 'restore'] )->name('skiResort.restore')->middleware('auth');
 
