@@ -6,7 +6,7 @@
 @section('contenido')
 	<div class='container'>
 		<div class='row'>
-            <form class="col-7 my-2 border p-5" method="POST" action="{{route('skiResort.update', $skiResort->id)}}"> 
+            <form class="col-7 my-2 border p-5" method="POST" enctype="multipart/form-data" action="{{route('skiResort.update', $skiResort->id)}}"> 
             	{{csrf_field()}} 
             	<input name="_method" type="hidden" value="PUT">
                 <div class="form-group row">
@@ -36,11 +36,15 @@
                 	</div>
                 </div>
                 <div class="form-group row">
+         			<label for="inputImage" class="col-sm-2 col-form-label">Imagen</label> 
+                    <input name="image" type="file" class="form-control-file col-sm-10 " id="inputImage">
+        		</div>
+                <div class="form-group row">
                 	<button type="submit" class="btn btn-success mt-5 m-2">Guardar</button> 
                 	<button type="reset" class="btn btn-secondary m-2">Reestablecer</button>
                 </div>
             </form>
-            <form class="col-3 my-5" method="POST" action="{{route('skiResort.update', $skiResort->id)}}">
+            <form class="col-3 my-5" method="POST" action="{{route('skiResort.deleteImage', $skiResort->id)}}">
                 <div class="form-group row">
           
                 	<figure class="text-center" style="max-width: 176px"> 
@@ -52,10 +56,7 @@
 									asset('storage/'.config('filesystems.skiresortImageDir')).'/void.jpg'
 								 }}">
 					</figure>
-					<!--                 
- 					<label for="inputImage" class="col-sm-2 col-form-label">Imagen</label> 
-            		<input name="image" type="file" class="form-control-file col-sm-10 " id="inputImage">
-            		 -->
+					<input type="submit" alt="Borrar foto" title="Eliminar" class="btn btn-danger" value="Eliminar foto">
                 </div>
             </form>
 		</div>

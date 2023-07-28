@@ -106,7 +106,11 @@
                         				</a>
                         			</td>
                         			<td class="text-center">
-                        				<form method="POST" action="route(skiresort.purge"}}>
+                        				<a onclick='if(confirm("Estás seguro"))
+                        								this.nextElementSibling.submit();'>
+                        				    <button class="btn btn-danger">Eliminar</button>
+                        				</a>
+                        				<form method="POST" action="{{route(skiresort.purge, $skiResort->id}}">
                         					@csrf
                         					<input name="_method" type="hidden" value="DELETE">
                         					<input name="skiResort_id" type="hidden" value="{{$skiResort->id}}">

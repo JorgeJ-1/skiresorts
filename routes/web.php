@@ -32,18 +32,20 @@ Route::get('/', [WelcomeController::class, 'index'])->name('portada');
 
 //Route::resource('skiResort', SkiResortController::class); // Genera las rutas automáticamente
 
-
 Route::get('skiResort', [SkiResortController::class, 'index'] )->name('skiResort.index');
 Route::post('skiResort', [SkiResortController::class, 'store'] )->name('skiResort.store')->middleware('auth');
 Route::get('skiResort/create', [SkiResortController::class, 'create'] )->name('skiResort.create')->middleware('auth');
 Route::get('skiResort/search', [SkiResortController::class, 'search'] )->name('skiResort.search');
+Route::delete('skiResort/purge', [SkiResortController::class, 'purge'] )->name('skiResort.purge')->middleware('auth');
 Route::get('skiResort/{skiResort}', [SkiResortController::class, 'show'] )->name('skiResort.show');
 Route::put('skiResort/{skiResort}', [SkiResortController::class, 'update'] )->name('skiResort.update')->middleware('auth');
-Route::delete('skiResort/purge', [SkiResortController::class, 'purge'] )->name('skiResort.purge')->middleware('auth');
 Route::delete('skiResort/{skiResort}', [SkiResortController::class, 'destroy'] )->name('skiResort.destroy')->middleware('auth');
 Route::get('skiResort/{skiResort}/delete', [SkiResortController::class, 'delete'] )->name('skiResort.delete')->middleware('auth');
+Route::put('skiResort/{skiResort}/deleteImage', [SkiResortController::class, 'deleteImage'] )->name('skiResort.deleteImage')->middleware('auth');
 Route::get('skiResort/{skiResort}/edit', [SkiResortController::class, 'edit'] )->name('skiResort.edit')->middleware('auth');
 Route::get('skiResort/{skiResort}/restore', [SkiResortController::class, 'restore'] )->name('skiResort.restore')->middleware('auth');
+
+
 
 //Route::get('skiResort/{skiResort}/delete', [SkiResortController::class, 'delete'] )->name('skiResort.delete'); // Delete genera una sola ruta
 

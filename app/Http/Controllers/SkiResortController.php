@@ -10,6 +10,7 @@ use App\Http\Requests\SkiResortRequest;
 use Facade\FlareClient\View;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Storage;
 use App\Events\FirstSkiResortCreated;
 
 
@@ -115,14 +116,16 @@ class SkiResortController extends Controller
         $datos =$request->except(['image'])+['isOpen'=>0]+['image'=>NULL];
         $datos['user_id']=$request->user()->id;
         
+        // Añade la imagen si llega por la request
         if ($request->hasFile('image')) {
             $ruta= $request->file('image')->store(config('filesystems.skiresortImageDir'));
-            // pendiente añadir gestión de errores
+            /**
+            * pendiente añadir gestión de errores
+            */
             $datos['image']=pathinfo($ruta, PATHINFO_BASENAME);
         }
         
         $skiResort=SkiResort::create($datos);
-
                 
         // Mensaje de felicitación después de crear la primera moto
         if($request->user()->skiResorts->count()==1){
@@ -224,44 +227,6 @@ class SkiResortController extends Controller
 
         return view('skiResorts.delete',['skiResort'=>$skiResort]);
     }
-    
-    /**
-     * Restaura una estación de esquií borrada.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function restore(Request $request, SkiResort $skiResort)
-    {
-        
-        if (!$request->hasValidSignature()) {
-            abort('401','La firma no se pudo validar');
-        }
-        
-        /* Se sustituye la autorización de Gates por Policies
-        if(Gate::denies('skiresortdelete',$skiResort))
-        {
-            abort(401,'No eres propietario de la estación de esquí');
-        }
-        */
-        // Autorización mediante policie
-        if ($request->user()->cannot('restore',$skiResort)) {
-            abort(401,'No eres propietario de la estación de esquí');
-        }
-        
-        // Implicit binding
-        //$skiResort=SkiResort::findOrFail($id);
-        
-        $skiResort->restore();
-        
-        //return redirect('skiResort')->with('success',"Estación de esquí $skiResort->name eliminada");
-        //return redirect()
-        //    ->route('skiResort.index')
-        //    ->with('success',"Estación de esquí $skiResort->name eliminada");
-        return back()
-            ->with('success',"Estación de esquí $skiResort->name ha sido restaurada");
-        
-    }
 
     /**
     * Remove the specified resource from storage.
@@ -298,5 +263,110 @@ class SkiResortController extends Controller
         ->with('success',"Estación de esquí $skiResort->name eliminada");
         
     }
+    
+    /**
+     * Restaura una estación de esquí borrada.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function restore(Request $request, int $id)
+    {
+        
+        if (!$request->hasValidSignature()) {
+            abort('401','La firma no se pudo validar');
+        }
+        
+        /* Se sustituye la autorización de Gates por Policies
+         if(Gate::denies('skiresortdelete',$skiResort))
+         {
+         abort(401,'No eres propietario de la estación de esquí');
+         }
+         */
+        
+        // Implicit binding no se puede usar porque la moto está borrada
+        $skiResort=SkiResort::withoutTrashed()->findOrFail($id);
+
+        // Autorización mediante policie
+        if ($request->user()->cannot('restore',$skiResort)) {
+            abort(401,'No eres propietario de la estación de esquí');
+        }
+        
+        $skiResort->restore();
+        
+        //return redirect('skiResort')->with('success',"Estación de esquí $skiResort->name eliminada");
+        //return redirect()
+        //    ->route('skiResort.index')
+        //    ->with('success',"Estación de esquí $skiResort->name eliminada");
+        return back()
+        ->with('success',"Estación de esquí $skiResort->name ha sido restaurada");
+        
+    }
+    
+    /**
+     * Restaura una estación de esquí borrada.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function purge(Request $request)
+    {
+        
+        if (!$request->hasValidSignature()) {
+            abort('401','La firma no se pudo validar');
+        }
+        
+        // Implicit binding no se puede usar porque la moto está borrada
+        $skiResort=SkiResort::withoutTrashed()->findOrFail($id);
+        
+        if ($skiResort->image) {
+            Storage::delete(config('filesystems.skiresortImageDir').'/'.$skiResort->image);
+            /**
+             * Pendiente añadir el control de errores
+             */
+        }
+        
+        // Autorización mediante policie
+        if ($request->user()->cannot('restore',$skiResort)) {
+            abort(401,'No eres propietario de la estación de esquí');
+        }
+        
+       
+        $skiResort->purge();
+        
+        //return redirect('skiResort')->with('success',"Estación de esquí $skiResort->name eliminada");
+        //return redirect()
+        //    ->route('skiResort.index')
+        //    ->with('success',"Estación de esquí $skiResort->name eliminada");
+        return back()
+        ->with('success',"Estación de esquí $skiResort->name ha sido eliminada definitivamente");
+        
+    }
+    
+    //
+    public function deleteImage(Request $request, SkiResort $skiResort){
+        
+        if (!$request->hasValidSignature()) {
+            abort('401','La firma no se pudo validar');
+        }
+        
+        // Autorización mediante policie
+        if ($request->user()->cannot('restore',$skiResort)) {
+            abort(401,'No eres propietario de la estación de esquí');
+        }
+        
+        if ($skiResort->image) {
+            Storage::delete(config('filesystems.skiresortImageDir').'/'.$skiResort->image);
+            /**
+             * Pendiente añadir el control de errores
+             */
+            $skiResort->image=null;
+            $skiResort->update();
+        }
+        
+        return back();
+            
+    }
+    
     
 }
