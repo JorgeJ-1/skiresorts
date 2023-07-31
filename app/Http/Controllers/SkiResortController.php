@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\SkiResort;
 use App\Http\Requests\SkiResortRequest;
+use App\Http\Requests\SkiResortUpdateRequest;
 use Facade\FlareClient\View;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Gate;
@@ -75,7 +76,6 @@ class SkiResortController extends Controller
     public function create()
     {
         //mostrar formulario
-        //dd('estoy en el controlador');
         return view('skiResorts.create');
     }
     
@@ -128,7 +128,7 @@ class SkiResortController extends Controller
         $skiResort=SkiResort::create($datos);
                 
         // Mensaje de felicitación después de crear la primera moto
-        if($request->user()->skiResorts->count()==1){
+        if($request->user()->skiResorts->count()>1){
             FirstSkiResortCreated::dispatch($skiResort, $request->user());
         }
         
@@ -173,7 +173,7 @@ class SkiResortController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, SkiResort $skiResort)
+    public function update(SkiResortUpdateRequest $request, SkiResort $skiResort)
     {
 
         // Autorización mediante policie
@@ -194,15 +194,6 @@ class SkiResortController extends Controller
        
         //$skiResort = SkiResort::findOrFail($id);
                 
-        if ($request->hasFile('image')) {
-            $ruta= $request->file('image')->store(config('filesystems.skiresortImageDir'));
-            /**
-             * pendiente añadir gestión de errores
-             */
-            $skiResort->image=pathinfo($ruta, PATHINFO_BASENAME);
-        }
-        
-       
         $skiResort->update($request->all()+['isOpen'=>0]);
 
         return back()->with('success',"Estación de esquí  $skiResort->name actualizada");
@@ -264,7 +255,9 @@ class SkiResortController extends Controller
         // Implicit binding
         //$skiResort=SkiResort::findOrFail($id);
         
-        $skiResort->delete();
+        if($skiResort->delete()&& $skiResort->image){
+            Storage::delete(config('filesystems.skiresortImageDir').'/'.$skiResort->image);
+        }   
         
         //return redirect('skiResort')->with('success',"Estación de esquí $skiResort->name eliminada");
         return redirect()
@@ -347,7 +340,8 @@ class SkiResortController extends Controller
         //}
         
         if ($skiResort->image) {
-            Storage::delete(config('filesystems.skiresortImageDir').'/'.$skiResort->image);
+
+            Storage::delete(config('filesystems.skiresortImageDir').$skiResort->image);
             /**
              * Pendiente añadir el control de errores
              */
@@ -355,9 +349,39 @@ class SkiResortController extends Controller
             $skiResort->update();
         }
         
-        return back();
+        return view('skiResorts.update',['skiResort'=>$skiResort]);
             
     }
+    
+    //
+    public function updateImage(Request $request, SkiResort $skiResort){
+        
+        /**
+         * Autorización mediante policie de deleteImage pendiente
+         */
+        // Autorización mediante policie
+        //if ($request->user()->cannot('restore',$skiResort)) {
+        //    abort(401,'No eres propietario de la estación de esquí');
+        //}
+        if ($request->hasFile('image')) {
+            $ruta= $request->file('image')->store(config('filesystems.skiresortImageDir'));
+            /**
+             * pendiente añadir gestión de errores
+             */
+            
+            $skiResort->image=pathinfo($ruta, PATHINFO_BASENAME);
+
+            $skiResort->update();
+
+        }
+            /**
+             * Pendiente añadir el control de errores
+             */
+
+        return view('skiResorts.update',['skiResort'=>$skiResort]);
+        
+    }
+    
     
     
 }

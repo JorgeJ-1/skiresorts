@@ -21,7 +21,7 @@
 			</tr>
 			<tr>
 				<td>Fecha de verificación</td>
-				<td>{{ $user->verified_at ?? 'Sin verificar' }}</td>
+				<td>{{ $user->email_verified_at ?? 'Sin verificar' }}</td>
 			</tr>
 			<tr>
 				<td>Roles</td>

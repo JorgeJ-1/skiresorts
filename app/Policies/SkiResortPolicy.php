@@ -31,6 +31,7 @@ class SkiResortPolicy
     public function view(User $user, SkiResort $skiResort)
     {
         //
+        
     }
 
     /**
@@ -42,6 +43,7 @@ class SkiResortPolicy
     public function create(User $user)
     {
         //
+        return $user->hasRole(['administrador','todopoderoso']);
     }
 
     /**
@@ -54,7 +56,7 @@ class SkiResortPolicy
     public function update(User $user, SkiResort $skiResort)
     {
         //
-        return $user->id == $skiResort->user_id||$user->name=='%admin%';  
+        return $user->id == $skiResort->user_id||$user->hasRole(['administrador','todopoderoso']);
     }
 
     /**
@@ -67,7 +69,7 @@ class SkiResortPolicy
     public function delete(User $user, SkiResort $skiResort)
     {
         //
-        return $user->id == $skiResort->user_id||$user->name=='%admin%';
+        return $user->id == $skiResort->user_id||$user->hasRole(['administrador','todopoderoso']);
     }
     
     /**
@@ -80,7 +82,7 @@ class SkiResortPolicy
     public function destroy(User $user, SkiResort $skiResort)
     {
         //
-        return $user->id == $skiResort->user_id||$user->name=='%admin%';
+        return $user->id == $skiResort->user_id||$user->hasRole(['administrador','todopoderoso']);
     }
     
     /**
@@ -107,6 +109,7 @@ class SkiResortPolicy
     public function forceDelete(User $user, SkiResort $skiResort)
     {
         //
+        return $user->hasRole(['administrador','todopoderoso']);
         
     }
 }

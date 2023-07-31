@@ -15,14 +15,18 @@ use App\Models\User;
 class FirstSkiResortCreated
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
+    
+    public $skiResort, $user;
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct(public SkiResort $skiResort, public User $user)
+    public function __construct(SkiResort $skiResort, User $user)
     {
         //
+        $this->skiResort=$skiResort;
+        $this->user=$user;
     }
 
     /**

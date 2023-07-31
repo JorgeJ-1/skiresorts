@@ -4,7 +4,7 @@
 		<meta charset="UTF-8">
 		<style>
             *
-            <!--    truco para incluir bootstrap en el mail        --> 
+            <!--   incluir bootstrap en el mail        --> 
             @php
                 include 'css/bootstrap.min.css';
             @endphp
@@ -21,7 +21,7 @@
 			<!--@dump($message)-->
 			<h2>Felicidades</h2>
 			<h3>¡Has publicado tu primera estación de esquí</h3>
-			<p> Tu primera estación de esquí {{$skiResort->name}} ya se ha incoporado a la World SkiResorts</p>
+			<p> Tu primera estación de esquí {{$skiResort->name}} ya se ha incoporado a World SkiResorts</p>
 			<p> Tu estación de esquí mejora nuestra web y esperamos que te sea de mucha utilidad</p>
 		</main>
 		<footer class='page-footer font-small p-4 my-4 bg-light'>

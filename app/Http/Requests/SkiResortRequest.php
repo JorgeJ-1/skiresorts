@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use PhpParser\Node\Expr\BinaryOp\GreaterOrEqual;
 
 class SkiResortRequest extends FormRequest
 {
@@ -33,7 +34,7 @@ class SkiResortRequest extends FormRequest
             'slopeKms' => 'required|numeric|between:1,99999',
             'runs' => 'required|numeric|between:1,99999',
             'isOpen'=> 'numeric|between:0,1',
-            'openRuns' => 'required_if:isOpen,1|numeric|between:0,99999',
+            'openRuns' => 'bail|required_if:isOpen,1|numeric|between:0,99999|lte:runs',
             //'seasonStart' => 'required_if:isOpen',
             //'seasonEnd' => 'required_if:isOpen',
         ];
