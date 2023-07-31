@@ -128,7 +128,7 @@ class SkiResortController extends Controller
         $skiResort=SkiResort::create($datos);
                 
         // Mensaje de felicitación después de crear la primera moto
-        if($request->user()->skiResorts->count()>1){
+        if($request->user()->skiResorts->count()==1){
             FirstSkiResortCreated::dispatch($skiResort, $request->user());
         }
         
@@ -176,10 +176,7 @@ class SkiResortController extends Controller
     public function update(SkiResortUpdateRequest $request, SkiResort $skiResort)
     {
 
-        // Autorización mediante policie
-        if ($request->user()->cant('update',$skiResort)) {
-            abort(401,'No eres propietario de la estación de esquí');
-        }
+  
         
         // Se elimina la validación explicita al realizarla la clase FormRequest
         /*

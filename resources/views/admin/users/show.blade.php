@@ -23,14 +23,6 @@
 				<td>Fecha de verificación</td>
 				<td>{{ $user->email_verified_at ?? 'Sin verificar' }}</td>
 			</tr>
-			<tr>
-				<td>Roles</td>
-				<td>
-                    @foreach($user->roles as $rol)
-                    - {{ $rol->role }}<br>
-                    @endforeach
-                </td>
-            </tr>
             <tr> 
             	<td>Roles</td>
                 <td>
@@ -64,11 +56,13 @@
                 </td>
             </tr>
 		</table>
+		<!-- 
 		<figure class="col-4"> <img class="rounded img-fluid"
             alt="Imagen del usuario {{ $user->name }}"
             src="{{ asset('storage/images/users/default.jpg') }}" >
         	<figcaption class="figure-caption text-center">{{ $user->name }}</figcaption>
         </figure>
+         -->
 	</div>
 @endsection 
 @section('enlaces')

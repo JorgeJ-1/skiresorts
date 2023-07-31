@@ -13,7 +13,7 @@ class SkiResortUpdateRequest extends SkiResortRequest
      */
     public function authorize()
     {
-        return true;
+        return $this->user()->can('update', $this->skiResort);
     }
 
     /**
